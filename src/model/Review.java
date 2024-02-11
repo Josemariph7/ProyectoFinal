@@ -8,24 +8,26 @@ import java.util.Objects;
  */
 public class Review {
     private Long reviewId; // Identificador único de la reseña
-    private Long accommodationId; // Identificador del alojamiento que se reseña (clave foránea)
-    private Long authorId; // Identificador del autor de la reseña (clave foránea)
+    private Accommodation accommodation; // Referencia al objeto Accommodation
+    private User author; // Referencia al objeto User que escribió la reseña
     private Integer rating; // Puntuación de la reseña
     private String comment; // Comentario de la reseña
     private LocalDateTime dateTime; // Fecha y hora de la reseña
 
-    public Review(Long reviewId, Long accommodationId, Long authorId, Integer rating, String comment, LocalDateTime dateTime) {
+    public Review(Long reviewId, Accommodation accommodation, User author, Integer rating, String comment, LocalDateTime dateTime) {
         this.reviewId = reviewId;
-        this.accommodationId = accommodationId;
-        this.authorId = authorId;
+        this.accommodation = accommodation;
+        this.author = author;
         this.rating = rating;
         this.comment = comment;
         this.dateTime = dateTime;
     }
 
+    // Constructor vacío si es necesario
     public Review() {
     }
 
+    // Getters y setters
     public Long getReviewId() {
         return reviewId;
     }
@@ -34,20 +36,20 @@ public class Review {
         this.reviewId = reviewId;
     }
 
-    public Long getAccommodationId() {
-        return accommodationId;
+    public Accommodation getAccommodation() {
+        return accommodation;
     }
 
-    public void setAccommodationId(Long accommodationId) {
-        this.accommodationId = accommodationId;
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public Integer getRating() {
@@ -74,25 +76,31 @@ public class Review {
         this.dateTime = dateTime;
     }
 
+    // Métodos equals, hashCode y toString actualizados para usar referencias de objeto
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Review review = (Review) o;
-        return Objects.equals(reviewId, review.reviewId) && Objects.equals(accommodationId, review.accommodationId) && Objects.equals(authorId, review.authorId) && Objects.equals(rating, review.rating) && Objects.equals(comment, review.comment) && Objects.equals(dateTime, review.dateTime);
+        return Objects.equals(reviewId, review.reviewId) &&
+                Objects.equals(accommodation, review.accommodation) &&
+                Objects.equals(author, review.author) &&
+                Objects.equals(rating, review.rating) &&
+                Objects.equals(comment, review.comment) &&
+                Objects.equals(dateTime, review.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reviewId, accommodationId, authorId, rating, comment, dateTime);
+        return Objects.hash(reviewId, accommodation, author, rating, comment, dateTime);
     }
 
     @Override
     public String toString() {
         return "Review{" +
                 "reviewId=" + reviewId +
-                ", accommodationId=" + accommodationId +
-                ", authorId=" + authorId +
+                ", accommodation=" + accommodation +
+                ", author=" + author +
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
                 ", dateTime=" + dateTime +

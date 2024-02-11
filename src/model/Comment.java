@@ -8,22 +8,24 @@ import java.util.Objects;
  */
 public class Comment {
     private Long commentId; // Identificador único del comentario
-    private Long postId; // Identificador de la publicación a la que pertenece el comentario
-    private Long authorId; // Identificador del autor del comentario
+    private Post post; // Publicación a la que pertenece el comentario
+    private User author; // Autor del comentario
     private String content; // Contenido textual del comentario
     private LocalDateTime dateTime; // Fecha y hora en que se hizo el comentario
 
     public Comment() {
     }
 
-    public Comment(Long commentId, Long postId, Long authorId, String content, LocalDateTime dateTime) {
+    // Asumiendo que las clases Post y User ya están definidas en el paquete model
+    public Comment(Long commentId, Post post, User author, String content, LocalDateTime dateTime) {
         this.commentId = commentId;
-        this.postId = postId;
-        this.authorId = authorId;
+        this.post = post;
+        this.author = author;
         this.content = content;
         this.dateTime = dateTime;
     }
 
+    // Getters y setters actualizados para trabajar con objetos relacionados
     public Long getCommentId() {
         return commentId;
     }
@@ -32,20 +34,20 @@ public class Comment {
         this.commentId = commentId;
     }
 
-    public Long getPostId() {
-        return postId;
+    public Post getPost() {
+        return post;
     }
 
-    public void setPostId(Long postId) {
-        this.postId = postId;
+    public void setPost(Post post) {
+        this.post = post;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getContent() {
@@ -64,28 +66,32 @@ public class Comment {
         this.dateTime = dateTime;
     }
 
+    // Asegúrate de actualizar los métodos equals y hashCode para usar las referencias de objetos
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(commentId, comment.commentId) && Objects.equals(postId, comment.postId) && Objects.equals(authorId, comment.authorId) && Objects.equals(content, comment.content) && Objects.equals(dateTime, comment.dateTime);
+        return Objects.equals(commentId, comment.commentId) &&
+                Objects.equals(post, comment.post) &&
+                Objects.equals(author, comment.author) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(dateTime, comment.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(commentId, postId, authorId, content, dateTime);
+        return Objects.hash(commentId, post, author, content, dateTime);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
                 "commentId=" + commentId +
-                ", postId=" + postId +
-                ", authorId=" + authorId +
+                ", post=" + (post != null ? post.getPostId() : null) +
+                ", author=" + (author != null ? author.getUserId() : null) +
                 ", content='" + content + '\'' +
                 ", dateTime=" + dateTime +
                 '}';
     }
 }
-

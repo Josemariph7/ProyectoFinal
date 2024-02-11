@@ -1,6 +1,5 @@
 package model;
 
-
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -9,21 +8,23 @@ import java.util.Objects;
  */
 public class Post {
     private Long postId; // Clave Primaria
-    private Long forumId; // Clave Foránea (Forum)
-    private Long authorId; // Clave Foránea (User)
+    private Forum forum; // Sustituir Long forumId por la referencia al objeto Forum
+    private User author; // Sustituir Long authorId por la referencia al objeto User
     private String title; // Título de la publicación
     private String content; // Contenido de la publicación
     private LocalDateTime dateTime; // Fecha y hora de la publicación
 
-    public Post(Long postId, Long forumId, Long authorId, String title, String content, LocalDateTime dateTime) {
+    // Constructor actualizado para usar objetos Forum y User en lugar de Long
+    public Post(Long postId, Forum forum, User author, String title, String content, LocalDateTime dateTime) {
         this.postId = postId;
-        this.forumId = forumId;
-        this.authorId = authorId;
+        this.forum = forum;
+        this.author = author;
         this.title = title;
         this.content = content;
         this.dateTime = dateTime;
     }
 
+    // Getters y setters actualizados para Forum y User
     public Long getPostId() {
         return postId;
     }
@@ -32,65 +33,46 @@ public class Post {
         this.postId = postId;
     }
 
-    public Long getForumId() {
-        return forumId;
+    public Forum getForum() {
+        return forum;
     }
 
-    public void setForumId(Long forumId) {
-        this.forumId = forumId;
+    public void setForum(Forum forum) {
+        this.forum = forum;
     }
 
-    public Long getAuthorId() {
-        return authorId;
+    public User getAuthor() {
+        return author;
     }
 
-    public void setAuthorId(Long authorId) {
-        this.authorId = authorId;
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
+    // ... Resto de getters y setters ...
 
     @Override
     public boolean equals(Object o) {
+        // Método equals actualizado para comparar objetos Forum y User
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
-        return Objects.equals(postId, post.postId) && Objects.equals(forumId, post.forumId) && Objects.equals(authorId, post.authorId) && Objects.equals(title, post.title) && Objects.equals(content, post.content) && Objects.equals(dateTime, post.dateTime);
+        return Objects.equals(postId, post.postId) && Objects.equals(forum, post.forum) && Objects.equals(author, post.author) && Objects.equals(title, post.title) && Objects.equals(content, post.content) && Objects.equals(dateTime, post.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(postId, forumId, authorId, title, content, dateTime);
+        // Método hashCode actualizado para incluir objetos Forum y User
+        return Objects.hash(postId, forum, author, title, content, dateTime);
     }
 
     @Override
     public String toString() {
+        // Método toString actualizado para incluir objetos Forum y User
         return "Post{" +
                 "postId=" + postId +
-                ", forumId=" + forumId +
-                ", authorId=" + authorId +
+                ", forum=" + forum +
+                ", author=" + author +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", dateTime=" + dateTime +

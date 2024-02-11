@@ -3,29 +3,27 @@ package model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-/**
- * Clase que representa una reserva (booking) en la aplicación.
- */
 public class Booking {
-    private Long bookingId; // Identificador único de la reserva
-    private Long accommodationId; // Identificador del alojamiento reservado
-    private Long userId; // Identificador del usuario que realiza la reserva
-    private LocalDateTime startDate; // Fecha de inicio de la reserva
-    private LocalDateTime endDate; // Fecha de fin de la reserva
-    private BookingStatus status; // Estado de la reserva (pendiente, confirmada, cancelada)
+    private Long bookingId;
+    private Accommodation accommodation; // Referencia directa al objeto Accommodation
+    private User user; // Referencia directa al objeto User
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private BookingStatus status;
 
     public Booking() {
     }
 
-    public Booking(Long bookingId, Long accommodationId, Long userId, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status) {
+    public Booking(Long bookingId, Accommodation accommodation, User user, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status) {
         this.bookingId = bookingId;
-        this.accommodationId = accommodationId;
-        this.userId = userId;
+        this.accommodation = accommodation;
+        this.user = user;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
     }
 
+    // Getters y setters actualizados para usar las referencias de objetos en lugar de Long IDs
     public Long getBookingId() {
         return bookingId;
     }
@@ -34,20 +32,20 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public Long getAccommodationId() {
-        return accommodationId;
+    public Accommodation getAccommodation() {
+        return accommodation;
     }
 
-    public void setAccommodationId(Long accommodationId) {
-        this.accommodationId = accommodationId;
+    public void setAccommodation(Accommodation accommodation) {
+        this.accommodation = accommodation;
     }
 
-    public Long getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public LocalDateTime getStartDate() {
@@ -79,27 +77,31 @@ public class Booking {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(bookingId, booking.bookingId) && Objects.equals(accommodationId, booking.accommodationId) && Objects.equals(userId, booking.userId) && Objects.equals(startDate, booking.startDate) && Objects.equals(endDate, booking.endDate) && status == booking.status;
+        return Objects.equals(bookingId, booking.bookingId) &&
+                Objects.equals(accommodation, booking.accommodation) &&
+                Objects.equals(user, booking.user) &&
+                Objects.equals(startDate, booking.startDate) &&
+                Objects.equals(endDate, booking.endDate) &&
+                status == booking.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookingId, accommodationId, userId, startDate, endDate, status);
+        return Objects.hash(bookingId, accommodation, user, startDate, endDate, status);
     }
 
     @Override
     public String toString() {
         return "Booking{" +
                 "bookingId=" + bookingId +
-                ", accommodationId=" + accommodationId +
-                ", userId=" + userId +
+                ", accommodation=" + (accommodation != null ? accommodation.getAccommodationId() : "null") +
+                ", user=" + (user != null ? user.getUserId() : "null") +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", status=" + status +
                 '}';
     }
 
-    // Estado de la reserva como Enum
     public enum BookingStatus {
         PENDING,
         CONFIRMED,

@@ -1,5 +1,6 @@
 package model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -13,7 +14,13 @@ public class User {
     private String phone; // Teléfono del usuario
     private UserRole role; // Rol del usuario (Estudiante, Propietario, Administrador)
 
+    // Listas para representar las relaciones con otras entidades
+    private List<Booking> bookings;
+    private List<Post> posts;
+    private List<Comment> comments;
+    private List<Review> reviews;
 
+    // Constructor completo
     public User(Long userId, String name, String email, String password, String phone, UserRole role) {
         this.userId = userId;
         this.name = name;
@@ -23,6 +30,7 @@ public class User {
         this.role = role;
     }
 
+    // Constructor vacío
     public User() {
     }
 
@@ -74,6 +82,38 @@ public class User {
         this.role = role;
     }
 
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,13 +138,9 @@ public class User {
                 ", role=" + role +
                 '}';
     }
-}
-
-/**
- * Enumeración de los roles posibles para un usuario.
- */
-enum UserRole {
-    STUDENT,
-    OWNER,
-    ADMINISTRATOR
+    public enum UserRole {
+        STUDENT,
+        OWNER,
+        ADMINISTRATOR
+    }
 }
