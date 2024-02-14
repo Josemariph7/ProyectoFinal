@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox fx:id="vbox" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.UserInterfaceController" styleClass="root">
+    <MenuBar>
+    </MenuBar>
+    <TableView fx:id="usersTable">
+        <columns>
+            <TableColumn text="ID" />
+            <TableColumn text="Nombre" />
+            <!-- Añadir más columnas según los atributos del usuario -->
+        </columns>
+    </TableView>
+    <HBox>
+        <Button text="Agregar" fx:id="addBtn" onAction="#create"/>
+        <Button text="Modificar" fx:id="updateBtn" onAction="#update"/>
+        <Button text="Eliminar" fx:id="deleteBtn" onAction="#delete"/>
+    </HBox>
+</VBox>

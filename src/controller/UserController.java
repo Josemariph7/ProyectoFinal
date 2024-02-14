@@ -19,7 +19,7 @@ public class UserController implements CRUD<User> {
 
     @Override
     public User getById(Long id) {
-        return userDAO.getById(id);
+        return null;
     }
 
     @Override
