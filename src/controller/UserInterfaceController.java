@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,11 @@ public class UserInterfaceController {
         vbox.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
         try {
             List<User> userList = userDAO.getAll();
+
+            for (User user : userList) {
+                System.out.println("ID: " + user.getUserId() + " - Nombre: " + user.getName() + " - Email: " + user.getEmail());
+            }
+
             if (userList != null) {
                 usersObservableList = FXCollections.observableArrayList(userList);
             } else {
@@ -43,6 +49,7 @@ public class UserInterfaceController {
         }
 
         usersTable.setItems(usersObservableList);
+        usersTable.refresh();
     }
 
 
@@ -67,12 +74,35 @@ public class UserInterfaceController {
 
             boolean updated = userDAO.update(selectedUser);
             if (updated) {
+                disableEditing(); // Deshabilita la edición de la tabla
                 // Update table if necessary
             } else {
                 // Handle update failure
             }
         }
     }
+
+    private void disableEditing() {
+        // Deshabilita la edición de la tabla
+        usersTable.setEditable(false);
+        for (TableColumn<User, ?> col : usersTable.getColumns()) {
+            col.setEditable(false);
+        }
+    }
+
+    private void enableEditing() {
+        // Habilita la edición de la tabla
+        usersTable.setEditable(true);
+        for (TableColumn<User, ?> col : usersTable.getColumns()) {
+            col.setEditable(true);
+        }
+    }
+
+    @FXML
+    private void edit(ActionEvent event) {
+        enableEditing(); // Habilita la edición de la tabla
+    }
+
 
     @FXML
     private void delete(ActionEvent event) {
