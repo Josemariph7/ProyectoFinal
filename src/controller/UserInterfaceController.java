@@ -5,18 +5,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import model.User;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 public class UserInterfaceController {
 
     private UserDAO userDAO = new UserDAO();
-    private ObservableList<User> usersObservableList;
 
     @FXML
     private VBox vbox;
@@ -30,7 +35,8 @@ public class UserInterfaceController {
     @FXML
     private void initialize() {
         vbox.getStyleClass().add("root");
-        vbox.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+        vbox.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+        ObservableList<User> usersObservableList;
         try {
             List<User> userList = userDAO.getAll();
 
@@ -38,11 +44,7 @@ public class UserInterfaceController {
                 System.out.println("ID: " + user.getUserId() + " - Nombre: " + user.getName() + " - Email: " + user.getEmail());
             }
 
-            if (userList != null) {
-                usersObservableList = FXCollections.observableArrayList(userList);
-            } else {
-                usersObservableList = FXCollections.observableArrayList();
-            }
+            usersObservableList = FXCollections.observableArrayList(userList);
         } catch (Exception e) {
             usersObservableList = FXCollections.observableArrayList();
             e.printStackTrace();
@@ -54,53 +56,45 @@ public class UserInterfaceController {
 
 
     @FXML
-    private void create(ActionEvent event) {
+    private void create(ActionEvent event) throws IOException {
         User newUser = new User();
-        newUser.setName(nameField.getText());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FormularioPrueba.fxml"));
+        Parent form = loader.load();
 
-        boolean created = userDAO.create(newUser);
-        if (created) {
-            usersTable.getItems().add(newUser);
-        } else {
-            // Handle creation failure
-        }
+        UserFormularioController formularioController = loader.getController();
+        formularioController.initData(newUser);
+
+        Stage stage = (Stage) usersTable.getScene().getWindow();
+        Scene scene = new Scene(form);
+        stage.setScene(scene);
+        stage.show();
     }
 
+
     @FXML
-    private void update(ActionEvent event) {
+    private void update(ActionEvent event) throws IOException {
         User selectedUser = usersTable.getSelectionModel().getSelectedItem();
-        if (selectedUser != null) {
-            selectedUser.setName(nameField.getText());
-
-            boolean updated = userDAO.update(selectedUser);
-            if (updated) {
-                disableEditing(); // Deshabilita la edición de la tabla
-                // Update table if necessary
-            } else {
-                // Handle update failure
-            }
+        if (selectedUser == null) {
+            return;
         }
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/FormularioPrueba.fxml"));
+        Parent form = loader.load();
+
+        UserFormularioController formularioController = loader.getController();
+        formularioController.initData(selectedUser);
+
+        Stage stage = (Stage) usersTable.getScene().getWindow();
+        Scene scene = new Scene(form);
+        stage.setScene(scene);
+        stage.show();
+        usersTable.refresh();
     }
 
-    private void disableEditing() {
-        // Deshabilita la edición de la tabla
-        usersTable.setEditable(false);
-        for (TableColumn<User, ?> col : usersTable.getColumns()) {
-            col.setEditable(false);
-        }
-    }
 
-    private void enableEditing() {
-        // Habilita la edición de la tabla
-        usersTable.setEditable(true);
-        for (TableColumn<User, ?> col : usersTable.getColumns()) {
-            col.setEditable(true);
-        }
-    }
+    void refreshTable()  {
 
-    @FXML
-    private void edit(ActionEvent event) {
-        enableEditing(); // Habilita la edición de la tabla
+        usersTable.refresh();
     }
 
 
@@ -112,8 +106,9 @@ public class UserInterfaceController {
             if (deleted) {
                 usersTable.getItems().remove(selectedUser);
             } else {
-                // Handle deletion failure
+
             }
         }
+        usersTable.refresh();
     }
 }
