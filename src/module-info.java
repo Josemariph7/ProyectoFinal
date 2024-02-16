@@ -18,4 +18,6 @@ module com.example.proyectofinal {
     exports controller;
     opens view to javafx.graphics;
     exports view;
+    opens model to javafx.base;
+
 }
