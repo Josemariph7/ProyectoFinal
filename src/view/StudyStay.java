@@ -16,10 +16,8 @@ public class StudyStay extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Asegúrate de que la ruta comienza con un '/' y refleja la estructura de directorios en tu proyecto.
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CrudPrueba.fxml"));
             Parent root = loader.load();
-
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -29,7 +27,6 @@ public class StudyStay extends Application {
     }
 
     public static void main(String[] args) {
-        // Inicia la aplicación JavaFX.
         launch(args);
     }
 }
