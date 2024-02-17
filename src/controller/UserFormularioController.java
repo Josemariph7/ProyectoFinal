@@ -30,7 +30,8 @@ public class UserFormularioController {
     @FXML
     private Button cancelarButton;
 
-    private UserDAO userDAO = new UserDAO();
+
+    private UserController usercontroller= new UserController();
     private User user;
 
     @FXML
@@ -69,9 +70,9 @@ public class UserFormularioController {
 
         boolean success;
         if (user.getUserId() == null) {
-            success = userDAO.create(user);
+            success = usercontroller.create(user);
         } else {
-            success = userDAO.update(user);
+            success = usercontroller.update(user);
         }
 
         if (success) {

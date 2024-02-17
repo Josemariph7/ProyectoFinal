@@ -21,7 +21,7 @@ import java.util.Objects;
 
 public class UserInterfaceController {
 
-    private UserDAO userDAO = new UserDAO();
+    private UserController usercontroller= new UserController();
 
     @FXML
     private VBox vbox;
@@ -38,7 +38,8 @@ public class UserInterfaceController {
         vbox.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
         ObservableList<User> usersObservableList;
         try {
-            List<User> userList = userDAO.getAll();
+            List<User> userList = usercontroller.getAll();
+
 
             for (User user : userList) {
                 System.out.println("ID: " + user.getUserId() + " - Nombre: " + user.getName() + " - Email: " + user.getEmail());
@@ -102,7 +103,7 @@ public class UserInterfaceController {
     private void delete(ActionEvent event) {
         User selectedUser = usersTable.getSelectionModel().getSelectedItem();
         if (selectedUser != null) {
-            boolean deleted = userDAO.delete(selectedUser.getUserId());
+            boolean deleted = usercontroller.delete(selectedUser.getUserId());
             if (deleted) {
                 usersTable.getItems().remove(selectedUser);
             } else {
