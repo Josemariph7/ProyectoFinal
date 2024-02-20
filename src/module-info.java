@@ -13,6 +13,7 @@ module com.example.proyectofinal {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.json;
+    requires jfoenix;
 
     opens controller to javafx.fxml;
     exports controller;

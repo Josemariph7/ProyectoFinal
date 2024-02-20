@@ -1,6 +1,5 @@
 package controller;
 
-import dao.UserDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -35,7 +33,7 @@ public class UserInterfaceController {
     @FXML
     private void initialize() {
         vbox.getStyleClass().add("root");
-        vbox.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/styles.css")).toExternalForm());
+        vbox.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/stylesprueba.css")).toExternalForm());
         ObservableList<User> usersObservableList;
         try {
             List<User> userList = usercontroller.getAll();

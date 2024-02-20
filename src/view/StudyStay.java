@@ -4,9 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.io.IOException;
+import javafx.stage.StageStyle;
+import java.net.URL;
 
 /**
  * Punto de entrada principal para la aplicación JavaFX.
@@ -14,14 +15,19 @@ import java.io.IOException;
 public class StudyStay extends Application {
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CrudPrueba.fxml"));
-            Parent root = loader.load();
+            URL fxmlUrl = getClass().getResource("/fxml/CrudPrueba.fxml");
+            if (fxmlUrl == null) {
+                throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+            }
+            Parent root = FXMLLoader.load(fxmlUrl);
             Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.show();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
