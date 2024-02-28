@@ -17,7 +17,7 @@ public class StudyStay extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            URL fxmlUrl = getClass().getResource("/fxml/CrudPrueba.fxml");
+            URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
             if (fxmlUrl == null) {
                 throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
             }
