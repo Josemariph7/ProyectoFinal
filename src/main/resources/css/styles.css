@@ -42,3 +42,14 @@
     -fx-background-radius: 5px;
     -fx-text-fill: whitesmoke;
 }
+
+.choice-box .context-menu {
+    -fx-background-color: whitesmoke;
+}
+
+
+.trans-btn-white-border:hover {
+    -fx-background-color: #151928;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2px;
+}

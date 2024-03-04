@@ -21,8 +21,7 @@ public class User {
     private List<Review> reviews;
 
     // Constructor completo
-    public User(Long userId, String name, String email, String password, String phone, UserRole role) {
-        this.userId = userId;
+    public User(String name, String email, String password, String phone, UserRole role) {
         this.name = name;
         this.email = email;
         this.password = password;

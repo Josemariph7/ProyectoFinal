@@ -1,7 +1,8 @@
 package controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import controller.UserController;
+import model.User;
+import model.User.UserRole;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -9,13 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
-import javafx.animation.TranslateTransition;
-
-import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Objects;
 
 public class SignUpController implements Initializable {
 
@@ -32,7 +30,10 @@ public class SignUpController implements Initializable {
     private TextField passwordField;
 
     @FXML
-    private ChoiceBox<String> roleChoiceBox;
+    private TextField passwordField2;
+
+    @FXML
+    private ChoiceBox<User.UserRole> roleChoiceBox;
 
     @FXML
     private Button signUpButton;
@@ -41,32 +42,47 @@ public class SignUpController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ObservableList<String> roles = FXCollections.observableArrayList(
-                "Administrador",
-                "Estudiante",
-                "Propietario"
-        );
-        roleChoiceBox.setItems(roles);
+        roleChoiceBox.getItems().addAll(User.UserRole.values());
+        roleChoiceBox.getSelectionModel().selectFirst();
     }
 
     @FXML
     private void signUp() {
-        String email = signupEmailField.getText();
-        String fullName = fullNameField.getText();
+        String email = fullNameField.getText();
+        String fullName = signupEmailField.getText();
         String password = passwordField.getText();
+        String phone = passwordField2.getText();
+        UserRole role = roleChoiceBox.getValue();
 
-        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty()) {
+        if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || phone.isEmpty() || role == null) {
             showError("Por favor, rellena todos los campos.");
             return;
         }
+        try {
+            if (userExists(email)) {
+                showError("El usuario ya existe.");
+                return;
+            }
+            User user = new User(email, fullName, password, phone, role);
+            userController.create(user);
+            showSuccess("Registro exitoso.");
+            signupEmailField.setText("");
+            fullNameField.setText("");
+            passwordField.setText("");
+            passwordField2.setText("");
+        } catch (SQLException e) {
+            showError("Error al registrar el usuario: " + e.getMessage());
+        }
+    }
 
-        // Realizar la lógica de registro aquí
-
-        // Por ejemplo:
-        // userController.registerUser(email, fullName, password);
-
-        // Muestra un mensaje de éxito o cualquier otra acción necesaria después del registro
-        showSuccess("Registro exitoso.");
+    private boolean userExists(String email) throws SQLException {
+        List<User> users = userController.getAll();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void showError(String message) {
