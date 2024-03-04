@@ -31,7 +31,14 @@
     -fx-background-color: #2196f3;
     -fx-background-radius: 5px;
     -fx-text-fill: whitesmoke;
-
-
 }
 
+.text-field {
+    -fx-text-fill: white;
+}
+
+.choice-box {
+    -fx-background-color: #2196f3;
+    -fx-background-radius: 5px;
+    -fx-text-fill: whitesmoke;
+}
