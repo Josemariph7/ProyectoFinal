@@ -13,7 +13,6 @@ import model.User;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 public class SignInController {
 
@@ -51,7 +50,7 @@ public class SignInController {
 
         for (User user : userList) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                loadDashboard();
+                loadDashboard(user.getRole());
                 return;
             }
         }
@@ -59,19 +58,38 @@ public class SignInController {
         showError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
     }
 
-    private void loadDashboard() {
+    private void loadDashboard(User.UserRole role) {
+        String fxmlPath;
+        switch (role) {
+            case ADMINISTRATOR:
+                fxmlPath = "/fxml/DashboardAdmin.fxml";
+                break;
+            case STUDENT:
+                fxmlPath = "/fxml/DashboardStudent.fxml";
+                break;
+            case OWNER:
+                fxmlPath = "/fxml/DashboardOwner.fxml";
+                break;
+            default:
+                // Mostrar un mensaje de error si el rol no es reconocido
+                showError("Rol de usuario no reconocido");
+                return;
+        }
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboard = loader.load();
-            DashboardController dashboardController = loader.getController();
+
+            // Dependiendo del controlador de la vista cargada, puedes obtener su controlador y realizar acciones específicas si es necesario
 
             Stage stage = (Stage) emailField.getScene().getWindow(); // Usar un nodo asociado a la escena
             stage.setScene(new Scene(dashboard));
             stage.show();
         } catch (IOException ex) {
             showError("No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.");
+             ex.printStackTrace();
         }
     }
+
 
 
 

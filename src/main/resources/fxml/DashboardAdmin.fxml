@@ -15,23 +15,26 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1050.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminDashboardController">
     <children>
-        <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #05071F;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <ImageView fitHeight="73.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                <ImageView fitHeight="184.0" fitWidth="224.0" pickOnBounds="true" preserveRatio="true" translateY="-20.0">
                     <image>
                         <Image url="@../multimedia/jimmy-fallon.png" />
                     </image>
                     <VBox.margin>
                         <Insets bottom="10.0" top="50.0" />
                     </VBox.margin></ImageView>
-                <Label text="Jimmy Fallon" textFill="#e7e5e5">
+                <Label prefHeight="77.0" prefWidth="225.0" style="-fx-alignment: center;" text="Jimmy Fallon" textFill="#e7e5e5" translateY="-22.0">
                     <VBox.margin>
                         <Insets bottom="20.0" />
                     </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
                 </Label>
-                <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Overview" textFill="#e7e5e5">
+                <Button fx:id="btnOverview" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Overview" textFill="#e7e5e5" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -48,8 +51,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnOrders" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Orders">
+                <Button fx:id="btnOrders" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Orders" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -60,8 +66,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Customers">
+                <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Customers" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -72,8 +81,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Menus">
+                <Button fx:id="btnMenus" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Menus" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -84,8 +96,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Packages">
+                <Button fx:id="btnPackages" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Packages" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -96,8 +111,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Settings">
+                <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Settings" translateX="10.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -108,8 +126,11 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
-                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" stylesheets="@../css/stylesdashboard.css" text="Sign Out">
+                <Button fx:id="btnSignout" alignment="BASELINE_LEFT" graphicTextGap="22.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="259.0" style="-fx-background-color: #151928;" stylesheets="@../css/stylesdashboard.css" text="Sign Out" translateX="10.0" translateY="245.0">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -120,23 +141,26 @@
                     <padding>
                         <Insets left="50.0" />
                     </padding>
+               <font>
+                  <Font size="15.0" />
+               </font>
                 </Button>
             </children>
         </VBox>
-        <StackPane layoutX="258.0" prefHeight="576.0" prefWidth="793.0" style="-fx-background-color: #02030A;">
+        <StackPane layoutX="258.0" prefHeight="900.0" prefWidth="1182.0" style="-fx-background-color: #edf1ff;">
             <children>
                 <Pane fx:id="pnlCustomer" prefHeight="200.0" prefWidth="200.0" />
                 <Pane fx:id="pnlOrders" prefHeight="200.0" prefWidth="200.0" />
                 <Pane fx:id="pnlMenus" prefHeight="200.0" prefWidth="200.0" />
-                <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0">
+                <Pane fx:id="pnlOverview" prefHeight="554.0" prefWidth="793.0" style="-fx-background-color: #edf1ff;">
                     <children>
-                        <TextField layoutX="590.0" layoutY="47.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: #02030A; -fx-border-color: #B7C3D7; -fx-border-radius: 2em;" />
-                        <Label layoutX="57.0" layoutY="25.0" text="Restaurant Orders" textFill="#e7e5e5">
+                        <TextField layoutX="896.0" layoutY="127.0" prefHeight="27.0" prefWidth="183.0" promptText="search" style="-fx-background-color: #edf1ff; -fx-border-color: #0c0e17; -fx-border-radius: 2em;" />
+                        <Label layoutX="57.0" layoutY="25.0" prefHeight="53.0" prefWidth="196.0" style="-fx-text-fill: #0c0e17;" text="Dashboard" textFill="#e7e5e5">
                             <font>
-                                <Font size="24.0" />
+                                <Font size="36.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="72.0" prefHeight="92.0" prefWidth="661.0" spacing="50.0">
+                        <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="72.0" prefHeight="92.0" prefWidth="837.0" spacing="50.0">
                             <children>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                                     <children>
@@ -145,7 +169,10 @@
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Total Orders" textFill="#e7e5e5" />
+                                        <Label style="-fx-text-fill: #0c0e17;" text="Total Orders" textFill="#e7e5e5">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
                                     </children>
                                 </VBox>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -155,7 +182,10 @@
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Total delivered" textFill="#e7e5e5" />
+                                        <Label style="-fx-text-fill: #0c0e17;" text="Total delivered" textFill="#e7e5e5">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
                                     </children>
                                 </VBox>
                                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
@@ -165,60 +195,81 @@
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Peding Orders" textFill="#e7e5e5" />
+                                        <Label style="-fx-text-fill: #0c0e17;" text="Peding Orders" textFill="#e7e5e5">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
                                     </children>
                                 </VBox>
-                                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                                <VBox alignment="CENTER" prefHeight="92.0" prefWidth="116.0">
                                     <children>
                                         <Label text="780" textFill="#de0000">
                                             <font>
                                                 <Font name="System Bold" size="26.0" />
                                             </font>
                                         </Label>
-                                        <Label text="Orders on Hold" textFill="#e7e5e5" />
+                                        <Label prefHeight="21.0" prefWidth="104.0" style="-fx-text-fill: #0c0e17;" text="Orders on Hold" textFill="#e7e5e5">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
                                     </children>
                                 </VBox>
                             </children>
                         </HBox>
-                        <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="178.0" prefHeight="42.0" prefWidth="712.0" spacing="80.0" style="-fx-background-color: #02030A;">
+                        <HBox alignment="CENTER_LEFT" layoutX="45.0" layoutY="178.0" prefHeight="42.0" prefWidth="1046.0" spacing="80.0" style="-fx-background-color: #edf1ff;">
                             <children>
-                                <Label text="Company Name" textFill="#e7e5e5">
+                                <Label style="-fx-text-fill: #0c0e17;" text="Company Name" textFill="#e7e5e5" translateX="30.0">
                                     <HBox.margin>
                                         <Insets left="50.0" />
                                     </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                                 </Label>
-                                <Label text="Airport" textFill="#e7e5e5">
+                                <Label style="-fx-text-fill: #0c0e17;" text="Airport" textFill="#e7e5e5" translateX="100.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                                 </Label>
-                                <Label text="Delivery Date" textFill="#e7e5e5">
+                                <Label style="-fx-text-fill: #0c0e17;" text="Delivery Date" textFill="#e7e5e5" translateX="150.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                                 </Label>
-                                <Label text="Amount" textFill="#e7e5e5">
+                                <Label style="-fx-text-fill: #0c0e17;" text="Amount" textFill="#e7e5e5" translateX="200.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                                 </Label>
-                                <Label text="Status" textFill="#e7e5e5">
+                                <Label style="-fx-text-fill: #0c0e17;" text="Status" textFill="#e7e5e5" translateX="240.0">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                                 </Label>
                             </children>
                         </HBox>
-                        <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="320.0" prefWidth="746.0" stylesheets="@../css/stylesdashboard.css">
+                        <ScrollPane layoutX="14.0" layoutY="232.0" prefHeight="631.0" prefWidth="1151.0" style="-fx-background-color: #e0e7ff; -fx-border-color: #edf1ff;" stylesheets="@../css/stylesdashboard.css">
                             <content>
-                                <VBox fx:id="pnItems" prefHeight="318.0" prefWidth="744.0" spacing="5.0" style="-fx-background-color: #02030A;">
+                                <VBox fx:id="pnItems" prefHeight="630.0" prefWidth="1127.0" spacing="5.0" style="-fx-background-color: #edf1ff;">
                                     <padding>
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                 </VBox>
                             </content>
                         </ScrollPane>
-                        <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="749.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="17.0" fitWidth="16.0" layoutX="1053.0" layoutY="133.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../multimedia/icons8_Search_52px.png" />
                             </image>
@@ -229,6 +280,6 @@
         </StackPane>
     </children>
     <effect>
-        <DropShadow color="#1b1eeb" />
+        <DropShadow color="#151928" />
     </effect>
 </AnchorPane>

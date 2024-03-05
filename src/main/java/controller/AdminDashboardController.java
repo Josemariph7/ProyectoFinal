@@ -2,14 +2,11 @@ package controller;
 
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
@@ -18,7 +15,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class DashboardController implements Initializable {
+public class AdminDashboardController implements Initializable {
 
     @FXML
     private VBox pnItems = null;
@@ -62,15 +59,15 @@ public class DashboardController implements Initializable {
             try {
 
                 final int j = i;
-                nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Item.fxml")));
+                nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/ItemAdminList.fxml")));
 
                 //give the items some effect
 
                 nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #0A0E3F");
+                    nodes[j].setStyle("-fx-background-color : #edf1ff");
                 });
                 nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #02030A");
+                    nodes[j].setStyle("-fx-background-color : #edf1ff");
                 });
                 pnItems.getChildren().add(nodes[i]);
             } catch (IOException e) {
@@ -83,20 +80,20 @@ public class DashboardController implements Initializable {
 
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnCustomers) {
-            pnlCustomer.setStyle("-fx-background-color : #1620A1");
+            pnlCustomer.setStyle("-fx-background-color : #edf1ff");
             pnlCustomer.toFront();
         }
         if (actionEvent.getSource() == btnMenus) {
-            pnlMenus.setStyle("-fx-background-color : #53639F");
+            pnlMenus.setStyle("-fx-background-color : #edf1ff");
             pnlMenus.toFront();
         }
         if (actionEvent.getSource() == btnOverview) {
-            pnlOverview.setStyle("-fx-background-color : #02030A");
+            pnlOverview.setStyle("-fx-background-color : #edf1ff");
             pnlOverview.toFront();
         }
         if(actionEvent.getSource()==btnOrders)
         {
-            pnlOrders.setStyle("-fx-background-color : #464F67");
+            pnlOrders.setStyle("-fx-background-color : #edf1ff");
             pnlOrders.toFront();
         }
     }
