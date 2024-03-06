@@ -100,4 +100,9 @@ public class SignUpController implements Initializable {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void closeApp() {
+        System.exit(0);
+    }
 }

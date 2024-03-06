@@ -30,10 +30,7 @@ public class SignInController {
     @FXML
     private void initialize() {
         emailField.requestFocus();
-
-            vbox = new VBox();
-
-
+        vbox = new VBox();
     }
 
     @FXML
@@ -50,7 +47,8 @@ public class SignInController {
 
         for (User user : userList) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                loadDashboard(user.getRole());
+                loadDashboard(user.getRole(), user);
+                System.out.println(user);
                 return;
             }
         }
@@ -58,7 +56,7 @@ public class SignInController {
         showError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
     }
 
-    private void loadDashboard(User.UserRole role) {
+    private void loadDashboard(User.UserRole role, User user) {
         String fxmlPath;
         switch (role) {
             case ADMINISTRATOR:
@@ -79,20 +77,23 @@ public class SignInController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboard = loader.load();
 
-            // Dependiendo del controlador de la vista cargada, puedes obtener su controlador y realizar acciones específicas si es necesario
+            AdminDashboardController adminController = loader.getController();
+            adminController.initData(user);
 
-            Stage stage = (Stage) emailField.getScene().getWindow(); // Usar un nodo asociado a la escena
-            stage.setScene(new Scene(dashboard));
+            // Configurar la escena
+            Scene scene = new Scene(dashboard);
+
+            // Obtener el Stage actual desde cualquier nodo de la escena
+            Stage stage = (Stage) emailField.getScene().getWindow();
+
+            // Establecer la escena y mostrar el Stage
+            stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {
             showError("No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.");
-             ex.printStackTrace();
+            ex.printStackTrace();
         }
     }
-
-
-
-
 
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -100,5 +101,10 @@ public class SignInController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void closeApp() {
+        System.exit(0);
     }
 }

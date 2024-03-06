@@ -28,13 +28,9 @@ public class OwnerDashboardController implements Initializable {
     @FXML
     private Button btnSignout;
 
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     }
-
 
     @FXML
     public void signOut(ActionEvent actionEvent) {

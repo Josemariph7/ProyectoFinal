@@ -1,6 +1,7 @@
 package model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,6 +13,8 @@ public class Comment {
     private User author; // Autor del comentario
     private String content; // Contenido textual del comentario
     private LocalDateTime dateTime; // Fecha y hora en que se hizo el comentario
+
+    private List<Comment> comments;
 
     public Comment() {
     }
@@ -64,6 +67,14 @@ public class Comment {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     // Asegúrate de actualizar los métodos equals y hashCode para usar las referencias de objetos

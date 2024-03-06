@@ -14,7 +14,6 @@ public class Post {
     private String content; // Contenido de la publicación
     private LocalDateTime dateTime; // Fecha y hora de la publicación
 
-    // Constructor actualizado para usar objetos Forum y User en lugar de Long
     public Post(Long postId, Forum forum, User author, String title, String content, LocalDateTime dateTime) {
         this.postId = postId;
         this.forum = forum;

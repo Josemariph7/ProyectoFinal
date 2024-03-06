@@ -14,8 +14,6 @@ module com.example.proyectofinal {
     requires java.sql;
     requires org.json;
 
-
-
     opens controller to javafx.fxml;
     exports controller;
     opens view to javafx.graphics;

@@ -1,6 +1,5 @@
 package controller;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,11 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-
+import model.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -23,18 +27,27 @@ import java.util.ResourceBundle;
 public class AdminDashboardController implements Initializable {
 
     @FXML
+    public Button btnExit;
+
+    @FXML
+    private Pane dragArea;
+
+    @FXML
+    public Label username;
+    @FXML
     private VBox pnItems = null;
-    @FXML
-    private Button btnOverview;
 
     @FXML
-    private Button btnOrders;
+    private Button btnProfile;
 
     @FXML
-    private Button btnCustomers;
+    private Button btnUsers;
 
     @FXML
-    private Button btnMenus;
+    private Button btnAccommodations;
+
+    @FXML
+    private Button btnForum;
 
     @FXML
     private Button btnPackages;
@@ -46,28 +59,44 @@ public class AdminDashboardController implements Initializable {
     private Button btnSignout;
 
     @FXML
-    private Pane pnlCustomer;
+    private Pane pnlProfile;
 
     @FXML
-    private Pane pnlOrders;
+    private Pane pnlUsers;
 
     @FXML
-    private Pane pnlOverview;
+    private Pane pnlForum;
 
     @FXML
-    private Pane pnlMenus;
+    private Pane pnlAccommodations;
+
+    @FXML
+    private Circle circle;
+
+    private User currentUser;
+
+    private double xOffset = 0;
+    private double yOffset = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        dragArea.setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+
+        dragArea.setOnMouseDragged(event -> {
+            dragArea.getScene().getWindow().setX(event.getScreenX() - xOffset);
+            dragArea.getScene().getWindow().setY(event.getScreenY() - yOffset);
+        });
+
+        dragArea.toFront();
+
         Node[] nodes = new Node[10];
         for (int i = 0; i < nodes.length; i++) {
+            final int j = i;
             try {
-
-                final int j = i;
                 nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/ItemAdminList.fxml")));
-
-                //give the items some effect
-
                 nodes[i].setOnMouseEntered(event -> {
                     nodes[j].setStyle("-fx-background-color : #edf1ff");
                 });
@@ -79,33 +108,43 @@ public class AdminDashboardController implements Initializable {
                 e.printStackTrace();
             }
         }
-
     }
-
 
     public void handleClicks(ActionEvent actionEvent) {
-        if (actionEvent.getSource() == btnCustomers) {
-            pnlCustomer.setStyle("-fx-background-color : #edf1ff");
-            pnlCustomer.toFront();
+        if (actionEvent.getSource() == btnProfile) {
+            pnlProfile.setVisible(true);
+            pnlProfile.toFront();
+            pnlUsers.setVisible(false);
+            pnlAccommodations.setVisible(false);
+            pnlForum.setVisible(false);
         }
-        if (actionEvent.getSource() == btnMenus) {
-            pnlMenus.setStyle("-fx-background-color : #edf1ff");
-            pnlMenus.toFront();
-        }
-        if (actionEvent.getSource() == btnOverview) {
-            pnlOverview.setStyle("-fx-background-color : #edf1ff");
-            pnlOverview.toFront();
-        }
-        if(actionEvent.getSource()==btnOrders)
+        if(actionEvent.getSource()== btnUsers)
         {
-            pnlOrders.setStyle("-fx-background-color : #edf1ff");
-            pnlOrders.toFront();
+            pnlUsers.setVisible(true);
+            pnlUsers.toFront();
+            pnlProfile.setVisible(false);
+            pnlAccommodations.setVisible(false);
+            pnlForum.setVisible(false);
+        }
+        if (actionEvent.getSource() == btnAccommodations) {
+            pnlAccommodations.setVisible(true);
+            pnlAccommodations.toFront();
+            pnlProfile.setVisible(false);
+            pnlUsers.setVisible(false);
+            pnlForum.setVisible(false);
+        }
+        if (actionEvent.getSource() == btnForum) {
+            pnlForum.setVisible(true);
+            pnlForum.toFront();
+            pnlProfile.setVisible(false);
+            pnlUsers.setVisible(false);
+            pnlAccommodations.setVisible(false);
         }
     }
 
-    public void signOut(ActionEvent actionEvent) {
+
+    public void signOut(MouseEvent actionEvent) {
         if (actionEvent.getSource() == btnSignout) {
-            // Obtener el Stage actual desde cualquier nodo de la escena
             Stage stage = (Stage) btnSignout.getScene().getWindow();
 
             try {
@@ -124,6 +163,53 @@ public class AdminDashboardController implements Initializable {
             }
         }
     }
+
+    public void initData(User user) {
+        this.currentUser = user;
+        if (currentUser != null) {
+            this.username.setText(currentUser.getName());
+            System.out.println("Usuario actual en initData: " + currentUser.getName());
+
+            // Intentar cargar la imagen del perfil del usuario
+            String imageUrl = currentUser.getProfilePicture();
+            System.out.println(imageUrl);
+            System.out.println(currentUser);
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                try {
+                    // Se modifica para utilizar getResource en lugar de getResourceAsStream
+                    // Esto es útil cuando se trabaja con Image en JavaFX que espera una URL
+                    URL resource = getClass().getResource(imageUrl);
+                    if (resource != null) {
+                        Image profilePicture = new Image(resource.toExternalForm());
+                        circle.setFill(new ImagePattern(profilePicture));
+                    } else {
+                        // Si no se encuentra el recurso, cargar la imagen predeterminada
+                        cargarImagenPredeterminada();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    cargarImagenPredeterminada();
+                }
+            } else {
+                cargarImagenPredeterminada();
+            }
+        } else {
+            System.out.println("El usuario actual es nulo.");
+        }
+    }
+
+    private void cargarImagenPredeterminada() {
+        String defaultImageUrl = "/profilepictures/default.png";
+        URL defaultResource = getClass().getResource(defaultImageUrl);
+        if (defaultResource != null) {
+            Image defaultProfilePicture = new Image(defaultResource.toExternalForm());
+            circle.setFill(new ImagePattern(defaultProfilePicture));
+        } else {
+            System.out.println("No se pudo cargar la imagen predeterminada.");
+        }
+    }
+
+
     @FXML
     private void closeApp() {
         System.exit(0);

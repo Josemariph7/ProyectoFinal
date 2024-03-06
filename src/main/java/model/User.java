@@ -1,24 +1,23 @@
 package model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Clase que representa un usuario en el sistema.
- */
 public class User {
-    private Long userId; // Clave Primaria
-    private String name; // Nombre del usuario
-    private String email; // Email del usuario
-    private String password; // Contraseña del usuario
-    private String phone; // Teléfono del usuario
-    private UserRole role; // Rol del usuario (Estudiante, Propietario, Administrador)
-
-    // Listas para representar las relaciones con otras entidades
+    private Long userId;
+    private String name;
+    private String email;
+    private String password;
+    private String phone;
+    private UserRole role;
+    private LocalDateTime registrationDate;
+    private String profilePicture;
     private List<Booking> bookings;
     private List<Post> posts;
     private List<Comment> comments;
     private List<Review> reviews;
+    private List<Accommodation> accommodations;
 
     // Constructor completo
     public User(String name, String email, String password, String phone, UserRole role) {
@@ -27,6 +26,8 @@ public class User {
         this.password = password;
         this.phone = phone;
         this.role = role;
+        this.registrationDate = LocalDateTime.now();
+        this.profilePicture=null;
     }
 
     // Constructor vacío
@@ -81,6 +82,22 @@ public class User {
         this.role = role;
     }
 
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = "/profilepictures/"+profilePicture;
+    }
+
     public List<Booking> getBookings() {
         return bookings;
     }
@@ -113,17 +130,25 @@ public class User {
         this.reviews = reviews;
     }
 
+    public List<Accommodation> getAccommodations() {
+        return accommodations;
+    }
+
+    public void setAccommodations(List<Accommodation> accommodations) {
+        this.accommodations = accommodations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && role == user.role;
+        return Objects.equals(userId, user.userId) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && role == user.role && Objects.equals(registrationDate, user.registrationDate) && Objects.equals(profilePicture, user.profilePicture);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userId, name, email, password, phone, role);
+        return Objects.hash(userId, name, email, password, phone, role, registrationDate, profilePicture);
     }
 
     @Override
@@ -135,8 +160,11 @@ public class User {
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +
                 ", role=" + role +
+                ", registrationDate=" + registrationDate +
+                ", profilePicture='" + profilePicture + '\'' +
                 '}';
     }
+
     public enum UserRole {
         STUDENT,
         OWNER,
