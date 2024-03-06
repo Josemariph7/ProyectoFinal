@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,46 +31,33 @@ public class StudentDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Node[] nodes = new Node[10];
-        for (int i = 0; i < nodes.length; i++) {
-            try {
-                final int j = i;
-                nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/ItemAdminList.fxml")));
-                //give the items some effect
-                nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #edf1ff");
-                });
-                nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #edf1ff");
-                });
-                pnItems.getChildren().add(nodes[i]);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
-    public void handleClicks(ActionEvent actionEvent) {
+    @FXML
+    public void signOut(ActionEvent actionEvent) {
+        if (actionEvent.getSource() == btnSignout) {
+            Stage stage = (Stage) btnSignout.getScene().getWindow();
 
-        if(actionEvent.getSource()==btnSignout)
-        {
             try {
-                // Cargar la vista del login
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
-                Parent root = loader.load();
-                // Obtener el controlador del login
-                LoginController loginController = loader.getController();
-                // Configurar la escena con la vista del login
+                URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
+                if (fxmlUrl == null) {
+                    throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+                }
+                Parent root = FXMLLoader.load(fxmlUrl);
                 Scene scene = new Scene(root);
-                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                scene.setFill(Color.TRANSPARENT);
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                // Mostrar mensaje de error si no se puede cargar la vista del login
                 showError("Error al cargar la vista de inicio de sesión.");
             }
         }
+    }
+
+    @FXML
+    private void closeApp() {
+        System.exit(0);
     }
 
     private void showError(String message) {
