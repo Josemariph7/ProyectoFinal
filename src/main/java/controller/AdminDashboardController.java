@@ -17,10 +17,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.User;
+
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -28,14 +35,29 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     public Button btnExit;
+    @FXML
+    public Label namelabel;
+    @FXML
+    public Label idlabel;
+    @FXML
+    public Label passwordlabel;
+    @FXML
+    public Label datelabel;
+    @FXML
+    public Label rolelabel;
+    @FXML
+    public Label emaillabel;
+    @FXML
+    public Label phonelabel;
 
     @FXML
     private Pane dragArea;
 
     @FXML
     public Label username;
+
     @FXML
-    private VBox pnItems = null;
+    private VBox pnItems;
 
     @FXML
     private Button btnProfile;
@@ -48,12 +70,6 @@ public class AdminDashboardController implements Initializable {
 
     @FXML
     private Button btnForum;
-
-    @FXML
-    private Button btnPackages;
-
-    @FXML
-    private Button btnSettings;
 
     @FXML
     private Button btnSignout;
@@ -71,43 +87,100 @@ public class AdminDashboardController implements Initializable {
     private Pane pnlAccommodations;
 
     @FXML
+    private Label totalusers;
+
+    @FXML
+    private Label totalstudents;
+
+    @FXML
+    private Label totalowners;
+
+    @FXML
+    private Label lastweek;
+
+    @FXML
     private Circle circle;
+
+    @FXML
+    private Circle circleProfile;
 
     private User currentUser;
 
     private double xOffset = 0;
     private double yOffset = 0;
 
+    private int totalUsers = 0;
+    private int totalStudents = 0;
+    private  int totalOwners = 0;
+    private int registeredLastWeek = 0;
+    LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
+
+    private UserController userController = new UserController();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         dragArea.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
-
         dragArea.setOnMouseDragged(event -> {
             dragArea.getScene().getWindow().setX(event.getScreenX() - xOffset);
             dragArea.getScene().getWindow().setY(event.getScreenY() - yOffset);
         });
-
         dragArea.toFront();
 
-        Node[] nodes = new Node[10];
-        for (int i = 0; i < nodes.length; i++) {
-            final int j = i;
+        // Obtener todos los usuarios desde la base de datos
+        List<User> users = userController.getAll();
+
+        for (User user : users) {
+            updateStatistics();
             try {
-                nodes[i] = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/ItemAdminList.fxml")));
-                nodes[i].setOnMouseEntered(event -> {
-                    nodes[j].setStyle("-fx-background-color : #edf1ff");
-                });
-                nodes[i].setOnMouseExited(event -> {
-                    nodes[j].setStyle("-fx-background-color : #edf1ff");
-                });
-                pnItems.getChildren().add(nodes[i]);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml"));
+                Node node = loader.load();
+                // Configurar el controlador del nodo
+                ItemAdminListController controller = loader.getController();
+                controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
+
+                pnItems.getChildren().add(node);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void updateStatistics() {
+        // Obtener todos los usuarios desde la base de datos
+        List<User> usersAux = userController.getAll();
+         int totalUsers = 0;
+         int totalStudents = 0;
+         int totalOwners = 0;
+         int registeredLastWeek = 0;
+
+        for (User user : usersAux) {
+            // Incrementar el contador total de usuarios
+            totalUsers++;
+
+            // Determinar si el usuario es estudiante
+            if (user.getRole() == User.UserRole.STUDENT) {
+                totalStudents++;
+            }
+            // Determinar si el usuario es propietario
+            if (user.getRole() == User.UserRole.OWNER) {
+                totalOwners++;
+            }
+            // Verificar si el usuario se registró la última semana
+            LocalDate registrationDate = user.getRegistrationDate().toLocalDate();
+
+            if (registrationDate.isAfter(oneWeekAgo) || registrationDate.equals(oneWeekAgo)) {
+                registeredLastWeek++;
+            }
+        }
+        totalusers.setText(String.valueOf(totalUsers));
+        totalstudents.setText(String.valueOf(totalStudents));
+        totalowners.setText(String.valueOf(totalOwners));
+        lastweek.setText(String.valueOf(registeredLastWeek));
     }
 
     public void handleClicks(ActionEvent actionEvent) {
@@ -166,24 +239,29 @@ public class AdminDashboardController implements Initializable {
 
     public void initData(User user) {
         this.currentUser = user;
+        username.setText(currentUser.getName());
+        namelabel.setText(currentUser.getName());
+        idlabel.setText(String.valueOf(currentUser.getUserId()));
+        rolelabel.setText(currentUser.getRole().toString());
+        passwordlabel.setText(currentUser.getPassword());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = currentUser.getRegistrationDate().format(formatter);
+        datelabel.setText(formattedDate);
+        emaillabel.setText(currentUser.getEmail());
+        phonelabel.setText(currentUser.getPhone());
         if (currentUser != null) {
             this.username.setText(currentUser.getName());
-            System.out.println("Usuario actual en initData: " + currentUser.getName());
-
-            // Intentar cargar la imagen del perfil del usuario
             String imageUrl = currentUser.getProfilePicture();
-            System.out.println(imageUrl);
-            System.out.println(currentUser);
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 try {
-                    // Se modifica para utilizar getResource en lugar de getResourceAsStream
-                    // Esto es útil cuando se trabaja con Image en JavaFX que espera una URL
                     URL resource = getClass().getResource(imageUrl);
                     if (resource != null) {
                         Image profilePicture = new Image(resource.toExternalForm());
                         circle.setFill(new ImagePattern(profilePicture));
+                        circleProfile.setFill(new ImagePattern(profilePicture));
+                        circleProfile.setStroke(Color.web("#151928"));
+                        circleProfile.setStrokeWidth(5);
                     } else {
-                        // Si no se encuentra el recurso, cargar la imagen predeterminada
                         cargarImagenPredeterminada();
                     }
                 } catch (Exception e) {
@@ -204,11 +282,55 @@ public class AdminDashboardController implements Initializable {
         if (defaultResource != null) {
             Image defaultProfilePicture = new Image(defaultResource.toExternalForm());
             circle.setFill(new ImagePattern(defaultProfilePicture));
+            circleProfile.setFill(new ImagePattern(defaultProfilePicture));
+            circleProfile.setStroke(Color.web("#151928"));
+            circleProfile.setStrokeWidth(5);
         } else {
             System.out.println("No se pudo cargar la imagen predeterminada.");
         }
     }
 
+    @FXML
+    private void handleModify() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Modify.fxml"));
+            Parent root = loader.load();
+            System.out.println("Usuario que se intenta modificar: "+currentUser);
+            ModifyController modify = loader.getController();
+            modify.initData(currentUser, userController);
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(new Scene(root));
+
+            // Configurar el controlador actual como userData
+            stage.setUserData(this);
+
+            // Configurar el evento para el botón Cancelar
+            ModifyController modifyController = loader.getController();
+            modifyController.btnCancel.setOnAction(event -> {
+                stage.close();
+            });
+
+            modifyController.btnAccept.setOnAction(event -> {
+                currentUser=modifyController.getUser();
+                username.setText(currentUser.getName());
+                namelabel.setText(currentUser.getName());
+                idlabel.setText(String.valueOf(currentUser.getUserId()));
+                rolelabel.setText(currentUser.getRole().toString());
+                passwordlabel.setText(currentUser.getPassword());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String formattedDate = currentUser.getRegistrationDate().format(formatter);
+                datelabel.setText(formattedDate);
+                emaillabel.setText(currentUser.getEmail());
+                phonelabel.setText(currentUser.getPhone());
+                stage.close();
+            });
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Modificar usuario: " + currentUser);
+    }
 
     @FXML
     private void closeApp() {
