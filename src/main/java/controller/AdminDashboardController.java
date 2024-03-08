@@ -18,7 +18,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.User;
@@ -29,103 +28,59 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
+/**
+ * Controlador para el panel de administrador.
+ */
 public class AdminDashboardController implements Initializable {
 
-    @FXML
-    public Button btnExit;
-    @FXML
-    public Label namelabel;
-    @FXML
-    public Label idlabel;
-    @FXML
-    public Label passwordlabel;
-    @FXML
-    public Label datelabel;
-    @FXML
-    public Label rolelabel;
-    @FXML
-    public Label emaillabel;
-    @FXML
-    public Label phonelabel;
+    // Atributos de la interfaz gráfica
+    @FXML private Button btnExit;
+    @FXML private Label namelabel;
+    @FXML private Label idlabel;
+    @FXML private Label passwordlabel;
+    @FXML private Label datelabel;
+    @FXML private Label rolelabel;
+    @FXML private Label emaillabel;
+    @FXML private Label phonelabel;
+    @FXML private Button btnChangePhoto;
+    @FXML private Pane dragArea;
+    @FXML private Label username;
+    @FXML private VBox pnItems;
+    @FXML private Button btnProfile;
+    @FXML private Button btnUsers;
+    @FXML private Button btnAccommodations;
+    @FXML private Button btnForum;
+    @FXML private Button btnSignout;
+    @FXML private Pane pnlProfile;
+    @FXML private Pane pnlUsers;
+    @FXML private Pane pnlForum;
+    @FXML private Pane pnlAccommodations;
+    @FXML private Label totalusers;
+    @FXML private Label totalstudents;
+    @FXML private Label totalowners;
+    @FXML private Label lastweek;
+    @FXML private Circle circle;
+    @FXML private Circle circleProfile;
 
-    @FXML
-    private Button btnChangePhoto;
-
-    @FXML
-    private Pane dragArea;
-
-    @FXML
-    public Label username;
-
-    @FXML
-    private VBox pnItems;
-
-    @FXML
-    private Button btnProfile;
-
-    @FXML
-    private Button btnUsers;
-
-    @FXML
-    private Button btnAccommodations;
-
-    @FXML
-    private Button btnForum;
-
-    @FXML
-    private Button btnSignout;
-
-    @FXML
-    private Pane pnlProfile;
-
-    @FXML
-    private Pane pnlUsers;
-
-    @FXML
-    private Pane pnlForum;
-
-    @FXML
-    private Pane pnlAccommodations;
-
-    @FXML
-    private Label totalusers;
-
-    @FXML
-    private Label totalstudents;
-
-    @FXML
-    private Label totalowners;
-
-    @FXML
-    private Label lastweek;
-
-    @FXML
-    private Circle circle;
-
-    @FXML
-    private Circle circleProfile;
-
+    // Otros atributos
     private User currentUser;
-
     private double xOffset = 0;
     private double yOffset = 0;
-
-    private final int totalUsers = 0;
-    private final int totalStudents = 0;
-    private final int totalOwners = 0;
-    private final int registeredLastWeek = 0;
-    LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
-
     private final UserController userController = new UserController();
+    private final LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
+    /**
+     * Inicializa el controlador.
+     * @param location  La ubicación utilizada para resolver las rutas relativas para el objeto raíz.
+     * @param resources Los recursos utilizados para localizar el objeto raíz.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Configurar el arrastre de la ventana
         dragArea.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -136,8 +91,8 @@ public class AdminDashboardController implements Initializable {
         });
         dragArea.toFront();
 
+        // Obtener todos los usuarios y actualizar estadísticas
         List<User> users = userController.getAll();
-
         for (User user : users) {
             updateStatistics();
             try {
@@ -154,28 +109,25 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Actualiza las estadísticas de usuarios.
+     */
     public void updateStatistics() {
-
         List<User> usersAux = userController.getAll();
-         int totalUsers = 0;
-         int totalStudents = 0;
-         int totalOwners = 0;
-         int registeredLastWeek = 0;
+        int totalUsers = 0;
+        int totalStudents = 0;
+        int totalOwners = 0;
+        int registeredLastWeek = 0;
 
         for (User user : usersAux) {
-
             totalUsers++;
-
             if (user.getRole() == User.UserRole.STUDENT) {
                 totalStudents++;
             }
-
             if (user.getRole() == User.UserRole.OWNER) {
                 totalOwners++;
             }
-
             LocalDate registrationDate = user.getRegistrationDate().toLocalDate();
-
             if (registrationDate.isAfter(oneWeekAgo) || registrationDate.equals(oneWeekAgo)) {
                 registeredLastWeek++;
             }
@@ -186,6 +138,10 @@ public class AdminDashboardController implements Initializable {
         lastweek.setText(String.valueOf(registeredLastWeek));
     }
 
+    /**
+     * Gestiona los clics en los botones.
+     * @param actionEvent El evento de acción.
+     */
     public void handleClicks(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnProfile) {
             pnlProfile.setVisible(true);
@@ -218,6 +174,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+
+    /**
+     * Realiza el cierre de sesión.
+     * @param actionEvent El evento del mouse.
+     */
     public void signOut(MouseEvent actionEvent) {
         if (actionEvent.getSource() == btnSignout) {
             Stage stage = (Stage) btnSignout.getScene().getWindow();
@@ -239,6 +200,11 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+
+    /**
+     * Inicializa los datos del usuario.
+     * @param user El usuario actual.
+     */
     public void initData(User user) {
         this.currentUser = user;
         username.setText(currentUser.getName());
@@ -281,6 +247,10 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+
+    /**
+     * Carga la imagen predeterminada del usuario.
+     */
     private void cargarImagenPredeterminada() {
         String defaultImageUrl = "/profilepictures/default.png";
         URL defaultResource = getClass().getResource(defaultImageUrl);
@@ -295,6 +265,10 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+
+    /**
+     * Abre la ventana de modificación del usuario.
+     */
     @FXML
     private void handleModify() {
         try {
@@ -368,6 +342,10 @@ public class AdminDashboardController implements Initializable {
         System.out.println("Modificar usuario: " + currentUser);
     }
 
+    /**
+     * Cambia la foto de perfil del usuario.
+     * @param event El evento del botón.
+     */
     @FXML
     private void handleChangePhoto(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -409,11 +387,18 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
+    /**
+     * Cierra la aplicación.
+     */
     @FXML
     private void closeApp() {
         System.exit(0);
     }
 
+    /**
+     * Muestra un mensaje de error.
+     * @param message El mensaje de error.
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

@@ -4,21 +4,33 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Clase que representa un usuario en el sistema.
+ */
 public class User {
-    private Long userId;
-    private String name;
-    private String email;
-    private String password;
-    private String phone;
-    private UserRole role;
-    private LocalDateTime registrationDate;
-    private String profilePicture;
-    private List<Booking> bookings;
-    private List<Post> posts;
-    private List<Comment> comments;
-    private List<Review> reviews;
-    private List<Accommodation> accommodations;
+    private Long userId; // Identificador único del usuario
+    private String name; // Nombre del usuario
+    private String email; // Correo electrónico del usuario
+    private String password; // Contraseña del usuario
+    private String phone; // Número de teléfono del usuario
+    private UserRole role; // Rol del usuario en el sistema
+    private LocalDateTime registrationDate; // Fecha y hora de registro del usuario
+    private String profilePicture; // URL de la imagen de perfil del usuario
+    private List<Booking> bookings; // Lista de reservas realizadas por el usuario
+    private List<Post> posts; // Lista de publicaciones realizadas por el usuario
+    private List<Comment> comments; // Lista de comentarios realizados por el usuario
+    private List<Review> reviews; // Lista de reseñas realizadas por el usuario
+    private List<Accommodation> accommodations; // Lista de alojamientos gestionados por el usuario
 
+    /**
+     * Constructor de la clase User.
+     *
+     * @param name             Nombre del usuario.
+     * @param email            Correo electrónico del usuario.
+     * @param password         Contraseña del usuario.
+     * @param phone            Número de teléfono del usuario.
+     * @param role             Rol del usuario en el sistema.
+     */
     public User(String name, String email, String password, String phone, UserRole role) {
         this.name = name;
         this.email = email;
@@ -26,11 +38,13 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.registrationDate = LocalDateTime.now();
-        this.profilePicture=null;
+        this.profilePicture = null;
     }
 
     public User() {
     }
+
+    // Getters y setters
 
     public Long getUserId() {
         return userId;
@@ -93,7 +107,7 @@ public class User {
     }
 
     public void setProfilePicture(String profilePicture) {
-        this.profilePicture =profilePicture;
+        this.profilePicture = profilePicture;
     }
 
     public List<Booking> getBookings() {
@@ -141,7 +155,14 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(userId, user.userId) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && role == user.role && Objects.equals(registrationDate, user.registrationDate) && Objects.equals(profilePicture, user.profilePicture);
+        return Objects.equals(userId, user.userId) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(phone, user.phone) &&
+                role == user.role &&
+                Objects.equals(registrationDate, user.registrationDate) &&
+                Objects.equals(profilePicture, user.profilePicture);
     }
 
     @Override
@@ -163,6 +184,9 @@ public class User {
                 '}';
     }
 
+    /**
+     * Enumeración que representa los roles de usuario en el sistema.
+     */
     public enum UserRole {
         STUDENT,
         OWNER,

@@ -13,12 +13,23 @@ public class Comment {
     private User author; // Autor del comentario
     private String content; // Contenido textual del comentario
     private LocalDateTime dateTime; // Fecha y hora en que se hizo el comentario
+    private List<Comment> comments; // Lista de comentarios anidados a este comentario
 
-    private List<Comment> comments;
-
+    /**
+     * Constructor por defecto de la clase Comment.
+     */
     public Comment() {
     }
 
+    /**
+     * Constructor completo de la clase Comment.
+     *
+     * @param commentId Identificador único del comentario.
+     * @param post      Publicación a la que pertenece el comentario.
+     * @param author    Autor del comentario.
+     * @param content   Contenido textual del comentario.
+     * @param dateTime  Fecha y hora en que se hizo el comentario.
+     */
     public Comment(Long commentId, Post post, User author, String content, LocalDateTime dateTime) {
         this.commentId = commentId;
         this.post = post;
@@ -26,6 +37,8 @@ public class Comment {
         this.content = content;
         this.dateTime = dateTime;
     }
+
+    // Getters y setters
 
     public Long getCommentId() {
         return commentId;
@@ -75,6 +88,12 @@ public class Comment {
         this.comments = comments;
     }
 
+    /**
+     * Método equals para comparar objetos Comment.
+     *
+     * @param o Objeto a comparar.
+     * @return true si los objetos son iguales, false en caso contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,11 +106,21 @@ public class Comment {
                 Objects.equals(dateTime, comment.dateTime);
     }
 
+    /**
+     * Método hashCode para calcular el código hash del objeto Comment.
+     *
+     * @return Código hash del objeto Comment.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(commentId, post, author, content, dateTime);
     }
 
+    /**
+     * Método toString para obtener una representación en forma de cadena del objeto Comment.
+     *
+     * @return Representación en forma de cadena del objeto Comment.
+     */
     @Override
     public String toString() {
         return "Comment{" +

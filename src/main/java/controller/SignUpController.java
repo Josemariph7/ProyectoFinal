@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.regex.Matcher;
 
 public class SignUpController implements Initializable {
 
+    // Expresiones regulares para validar campos
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
     private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
     private static final String PHONE_REGEX = "^\\+34[0-9]{9}$";
@@ -42,12 +44,19 @@ public class SignUpController implements Initializable {
 
     public UserController userController = new UserController();
 
+    /**
+     * Método de inicialización del controlador.
+     * Establece las opciones del ChoiceBox para el rol del usuario.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         roleChoiceBox.getItems().addAll(UserRole.values());
         roleChoiceBox.getSelectionModel().selectFirst();
     }
 
+    /**
+     * Método para registrar un nuevo usuario.
+     */
     @FXML
     public void signUp() {
         String email = signupEmailField.getText();
@@ -56,6 +65,7 @@ public class SignUpController implements Initializable {
         String phone = passwordField2.getText();
         UserRole role = roleChoiceBox.getValue();
 
+        // Validación de campos
         StringBuilder errors = new StringBuilder();
         if (!validateEmail(email)) errors.append("Formato de email inválido.\n");
         if (!validateName(fullName)) errors.append("El nombre debe contener al menos un apellido y solo caracteres válidos.\n");
@@ -67,18 +77,23 @@ public class SignUpController implements Initializable {
             return;
         }
 
+        // Verifica que todos los campos estén completos
         if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || phone.isEmpty() || role == null) {
             showError("Por favor, rellena todos los campos.");
             return;
         }
+
         try {
+            // Verifica si el usuario ya existe
             if (userExists(email)) {
                 showError("El usuario ya existe.");
                 return;
             }
+            // Crea un nuevo objeto de usuario y lo guarda en la base de datos
             User user = new User(fullName, email, password, phone, role);
             userController.create(user);
             showSuccess("Registro exitoso.");
+            // Limpia los campos después del registro exitoso
             fullNameField.setText("");
             signupEmailField.setText("");
             passwordField.setText("");
@@ -88,6 +103,9 @@ public class SignUpController implements Initializable {
         }
     }
 
+    /**
+     * Método para verificar si un usuario ya existe en la base de datos.
+     */
     private boolean userExists(String email) throws SQLException {
         List<User> users = userController.getAll();
         for (User user : users) {
@@ -98,6 +116,9 @@ public class SignUpController implements Initializable {
         return false;
     }
 
+    /**
+     * Métodos de validación para los diferentes campos del formulario.
+     */
     private boolean validateEmail(String email) {
         Matcher matcher = emailPattern.matcher(email);
         return matcher.matches();
@@ -118,6 +139,9 @@ public class SignUpController implements Initializable {
         return matcher.matches();
     }
 
+    /**
+     * Método para mostrar un mensaje de error.
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -126,6 +150,9 @@ public class SignUpController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Método para mostrar un mensaje de éxito.
+     */
     private void showSuccess(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Éxito");
@@ -134,6 +161,9 @@ public class SignUpController implements Initializable {
         alert.showAndWait();
     }
 
+    /**
+     * Método para cerrar la aplicación.
+     */
     @FXML
     private void closeApp() {
         System.exit(0);

@@ -3,17 +3,33 @@ package model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+/**
+ * Clase que representa una reserva de alojamiento en la aplicación.
+ */
 public class Booking {
-    private Long bookingId;
-    private Accommodation accommodation;
-    private User user;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private BookingStatus status;
+    private Long bookingId; // Identificador único de la reserva
+    private Accommodation accommodation; // Referencia al alojamiento reservado
+    private User user; // Referencia al usuario que realiza la reserva
+    private LocalDateTime startDate; // Fecha de inicio de la reserva
+    private LocalDateTime endDate; // Fecha de fin de la reserva
+    private BookingStatus status; // Estado de la reserva
 
+    /**
+     * Constructor por defecto de la clase Booking.
+     */
     public Booking() {
     }
 
+    /**
+     * Constructor completo de la clase Booking.
+     *
+     * @param bookingId     Identificador único de la reserva.
+     * @param accommodation Referencia al alojamiento reservado.
+     * @param user          Referencia al usuario que realiza la reserva.
+     * @param startDate     Fecha de inicio de la reserva.
+     * @param endDate       Fecha de fin de la reserva.
+     * @param status        Estado de la reserva.
+     */
     public Booking(Long bookingId, Accommodation accommodation, User user, LocalDateTime startDate, LocalDateTime endDate, BookingStatus status) {
         this.bookingId = bookingId;
         this.accommodation = accommodation;
@@ -22,6 +38,8 @@ public class Booking {
         this.endDate = endDate;
         this.status = status;
     }
+
+    // Getters y setters
 
     public Long getBookingId() {
         return bookingId;
@@ -71,6 +89,12 @@ public class Booking {
         this.status = status;
     }
 
+    /**
+     * Método equals para comparar objetos Booking.
+     *
+     * @param o Objeto a comparar.
+     * @return true si los objetos son iguales, false en caso contrario.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,11 +108,21 @@ public class Booking {
                 status == booking.status;
     }
 
+    /**
+     * Método hashCode para calcular el código hash del objeto Booking.
+     *
+     * @return Código hash del objeto Booking.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(bookingId, accommodation, user, startDate, endDate, status);
     }
 
+    /**
+     * Método toString para obtener una representación en forma de cadena del objeto Booking.
+     *
+     * @return Representación en forma de cadena del objeto Booking.
+     */
     @Override
     public String toString() {
         return "Booking{" +
@@ -101,9 +135,12 @@ public class Booking {
                 '}';
     }
 
+    /**
+     * Enumeración que representa los posibles estados de una reserva.
+     */
     public enum BookingStatus {
-        PENDING,
-        CONFIRMED,
-        CANCELLED
+        PENDING,    // Pendiente
+        CONFIRMED,  // Confirmada
+        CANCELLED   // Cancelada
     }
 }

@@ -17,13 +17,18 @@ public class StudyStay extends Application {
     @Override
     public void start(Stage stage) {
         try {
+            // Cargar el archivo FXML para la pantalla de inicio de sesión
             URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
             if (fxmlUrl == null) {
-                throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+                throw new IllegalArgumentException("No se pudo encontrar el archivo FXML");
             }
             Parent root = FXMLLoader.load(fxmlUrl);
+
+            // Crear una escena con fondo transparente
             Scene scene = new Scene(root);
             scene.setFill(Color.TRANSPARENT);
+
+            // Establecer el escenario con estilo transparente
             stage.setScene(scene);
             stage.initStyle(StageStyle.TRANSPARENT);
             stage.show();

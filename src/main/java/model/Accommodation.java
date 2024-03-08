@@ -15,7 +15,15 @@ public class Accommodation {
     private List<Booking> bookings; // Lista de reservas para este alojamiento
     private List<Review> reviews; // Lista de reseñas para este alojamiento
 
-    // Constructor completo
+    /**
+     * Constructor completo para la clase Accommodation.
+     *
+     * @param accommodationId Identificador único del alojamiento.
+     * @param owner           Referencia al propietario del alojamiento.
+     * @param address         Dirección del alojamiento.
+     * @param price           Precio del alojamiento.
+     * @param description     Descripción del alojamiento.
+     */
     public Accommodation(Long accommodationId, User owner, String address, Double price, String description) {
         this.accommodationId = accommodationId;
         this.owner = owner;
@@ -24,11 +32,14 @@ public class Accommodation {
         this.description = description;
     }
 
-    // Constructor por defecto
+    /**
+     * Constructor por defecto para la clase Accommodation.
+     */
     public Accommodation() {
     }
 
     // Getters y setters
+
     public Long getAccommodationId() {
         return accommodationId;
     }

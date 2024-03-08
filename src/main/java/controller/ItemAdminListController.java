@@ -3,18 +3,21 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.User;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
 
+/**
+ * Controlador para los elementos de la lista de usuarios en el panel de administrador.
+ */
 public class ItemAdminListController {
 
     @FXML
@@ -35,28 +38,35 @@ public class ItemAdminListController {
     public Button btnModify;
 
     private User user;
-
     private UserController userController;
-
     private Node node;
-
     private VBox pnItems;
-    AdminDashboardController dashboard;
+    private AdminDashboardController dashboard;
 
-
-
-
-    public void initialize() {
+    /**
+     * Inicializa el controlador.
+     */
+    @FXML
+    private void initialize() {
         btnDelete.setOnAction(event -> handleDelete());
         btnModify.setOnAction(event -> handleModify());
     }
 
+    /**
+     * Inicializa los datos del usuario en el elemento de la lista.
+     *
+     * @param user                      El usuario a mostrar.
+     * @param userController            El controlador de usuario.
+     * @param node                      El nodo de la lista.
+     * @param pnItems                   El contenedor de la lista.
+     * @param adminDashboardController El controlador del panel de administrador.
+     */
     public void initData(User user, UserController userController, Node node, VBox pnItems, AdminDashboardController adminDashboardController) {
-        this.dashboard=adminDashboardController;
-        this.pnItems=pnItems;
+        this.dashboard = adminDashboardController;
+        this.pnItems = pnItems;
         this.user = user;
-        this.node=node;
-        this.userController=userController;
+        this.node = node;
+        this.userController = userController;
         lblUserId.setText(String.valueOf(user.getUserId()));
         lblName.setText(user.getName());
         lblEmail.setText(user.getEmail());
@@ -67,9 +77,11 @@ public class ItemAdminListController {
         lblRegDate.setText(formattedDate);
     }
 
+    /**
+     * Maneja el evento de eliminación de usuario.
+     */
     @FXML
     public void handleDelete() {
-
         userController.delete(user.getUserId());
         int index = pnItems.getChildren().indexOf(node);
         if (index != -1) {
@@ -81,12 +93,15 @@ public class ItemAdminListController {
         System.out.println("Eliminar usuario: " + user);
     }
 
+    /**
+     * Maneja el evento de modificación de usuario.
+     */
     @FXML
     private void handleModify() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Modify.fxml"));
             Parent root = loader.load();
-            System.out.println("Usuario que se intenta modificar: "+user);
+            System.out.println("Usuario que se intenta modificar: " + user);
             ModifyController modify = loader.getController();
             modify.initData(user, userController);
             Stage stage = new Stage();
@@ -105,7 +120,11 @@ public class ItemAdminListController {
         System.out.println("Modificar usuario: " + user);
     }
 
-
+    /**
+     * Actualiza los datos del usuario después de la modificación.
+     *
+     * @param updatedUser El usuario modificado.
+     */
     public void updateUserData(User updatedUser) {
         this.user = updatedUser;
         lblUserId.setText(String.valueOf(user.getUserId()));
@@ -119,3 +138,4 @@ public class ItemAdminListController {
         dashboard.updateStatistics();
     }
 }
+

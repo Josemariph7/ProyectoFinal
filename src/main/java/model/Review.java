@@ -8,12 +8,22 @@ import java.util.Objects;
  */
 public class Review {
     private Long reviewId; // Identificador único de la reseña
-    private Accommodation accommodation; // Referencia al objeto Accommodation
-    private User author; // Referencia al objeto User que escribió la reseña
+    private Accommodation accommodation; // Alojamiento al que pertenece la reseña
+    private User author; // Usuario que escribió la reseña
     private Integer rating; // Puntuación de la reseña
     private String comment; // Comentario de la reseña
     private LocalDateTime dateTime; // Fecha y hora de la reseña
 
+    /**
+     * Constructor de la clase Review.
+     *
+     * @param reviewId      Identificador único de la reseña.
+     * @param accommodation Alojamiento al que pertenece la reseña.
+     * @param author        Usuario que escribió la reseña.
+     * @param rating        Puntuación de la reseña.
+     * @param comment       Comentario de la reseña.
+     * @param dateTime      Fecha y hora de la reseña.
+     */
     public Review(Long reviewId, Accommodation accommodation, User author, Integer rating, String comment, LocalDateTime dateTime) {
         this.reviewId = reviewId;
         this.accommodation = accommodation;
@@ -96,8 +106,8 @@ public class Review {
     public String toString() {
         return "Review{" +
                 "reviewId=" + reviewId +
-                ", accommodation=" + accommodation +
-                ", author=" + author +
+                ", accommodation=" + (accommodation != null ? accommodation.getAccommodationId() : null) +
+                ", author=" + (author != null ? author.getUserId() : null) +
                 ", rating=" + rating +
                 ", comment='" + comment + '\'' +
                 ", dateTime=" + dateTime +
