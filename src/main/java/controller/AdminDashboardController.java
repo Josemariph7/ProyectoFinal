@@ -17,13 +17,17 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.User;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -49,6 +53,9 @@ public class AdminDashboardController implements Initializable {
     public Label emaillabel;
     @FXML
     public Label phonelabel;
+
+    @FXML
+    private Button btnChangePhoto;
 
     @FXML
     private Pane dragArea;
@@ -119,8 +126,6 @@ public class AdminDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
         dragArea.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -215,7 +220,6 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     public void signOut(MouseEvent actionEvent) {
         if (actionEvent.getSource() == btnSignout) {
             Stage stage = (Stage) btnSignout.getScene().getWindow();
@@ -251,12 +255,15 @@ public class AdminDashboardController implements Initializable {
         phonelabel.setText(currentUser.getPhone());
         if (currentUser != null) {
             this.username.setText(currentUser.getName());
-            String imageUrl = currentUser.getProfilePicture();
+            String imageUrl = "/profilepictures/"+currentUser.getProfilePicture();
+            System.out.println(this.currentUser.getProfilePicture());
+            System.out.println(imageUrl);
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 try {
                     URL resource = getClass().getResource(imageUrl);
                     if (resource != null) {
                         Image profilePicture = new Image(resource.toExternalForm());
+
                         circle.setFill(new ImagePattern(profilePicture));
                         circleProfile.setFill(new ImagePattern(profilePicture));
                         circleProfile.setStroke(Color.web("#151928"));
@@ -312,7 +319,12 @@ public class AdminDashboardController implements Initializable {
             });
 
             modifyController.btnAccept.setOnAction(event -> {
-                currentUser=modifyController.getUser();
+
+                currentUser.setName(modifyController.txtName.getText());
+                currentUser.setPhone(modifyController.txtPhone.getText());
+                currentUser.setRole(modifyController.getUser().getRole());
+                currentUser.setPassword(modifyController.txtPassword.getText());
+                currentUser.setEmail(modifyController.txtEmail.getText());
                 username.setText(currentUser.getName());
                 namelabel.setText(currentUser.getName());
                 idlabel.setText(String.valueOf(currentUser.getUserId()));
@@ -323,13 +335,84 @@ public class AdminDashboardController implements Initializable {
                 datelabel.setText(formattedDate);
                 emaillabel.setText(currentUser.getEmail());
                 phonelabel.setText(currentUser.getPhone());
+                userController.update(currentUser);
+                System.out.println("SE HA MODIFICADO: "+currentUser);
                 stage.close();
             });
+
+            List<User> users = userController.getAll();
+            while(!pnItems.getChildren().isEmpty()) {
+                pnItems.getChildren().remove(0);
+            }
+            System.out.println(currentUser);
+            initData(currentUser);
+            System.out.println(currentUser);
+
+            for (User user : users) {
+                updateStatistics();
+                try {
+                     loader = new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml"));
+                    Node node = loader.load();
+                    // Configurar el controlador del nodo
+                    ItemAdminListController controller = loader.getController();
+                    controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
+
+                    pnItems.getChildren().add(node);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             stage.show();
+            initData(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
         System.out.println("Modificar usuario: " + currentUser);
+    }
+
+    @FXML
+    private void handleChangePhoto(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Profile Picture");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            try {
+                // Ruta relativa desde la raíz del proyecto en un entorno de desarrollo
+                String relativePath = "src/main/resources/profilepictures/";
+                String filename = file.getName();
+                File directory = new File(relativePath);
+                if (!directory.exists()) {
+                    directory.mkdirs();
+                }
+
+                File destFile = new File(directory, filename);
+
+                // Copiar el archivo seleccionado al directorio del proyecto
+                Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                // Cargar la imagen en la interfaz
+                Image image = new Image(destFile.toURI().toString());
+                circle.setFill(new ImagePattern(image));
+                circleProfile.setFill(new ImagePattern(image));
+
+                // Actualizar el currentUser con la nueva imagen
+                System.out.println(filename);
+                currentUser.setProfilePicture(filename);
+                userController.update(currentUser);
+
+                // Aquí deberías guardar el cambio en currentUser en tu base de datos o archivo de configuración
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                showError("Error saving the image.");
+            }
+        }
     }
 
     @FXML

@@ -39,7 +39,7 @@
       </Label>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="signupEmailField" promptText="Email" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="fullNameField" promptText="Full Name" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
 
          </children>
          <VBox.margin>
@@ -48,7 +48,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="fullNameField" promptText="Full Name" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
+            <TextField fx:id="signupEmailField" promptText="Email" styleClass="tf_box" translateY="-45.0" HBox.hgrow="ALWAYS" />
 
          </children>
          <VBox.margin>

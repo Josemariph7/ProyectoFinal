@@ -156,7 +156,7 @@
             <children>
                 <Pane fx:id="pnlProfile" prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <StackPane prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
+                  <StackPane layoutX="70.0" layoutY="-32.0" prefHeight="250.0" prefWidth="250.0" translateX="800.0" translateY="60.0">
                      <padding>
                         <Insets bottom="20.0" top="26.0" />
                      </padding>
@@ -164,35 +164,26 @@
                         <Circle id="circleProfile" fx:id="circleProfile" centerX="100" centerY="100" fill="WHITE" radius="125.0" />
                      </children>
                   </StackPane>
-                  <VBox layoutX="7.0" layoutY="161.0" prefHeight="731.0" prefWidth="938.0" translateX="50.0" translateY="-40.0">
+                  <VBox layoutX="-25.0" layoutY="161.0" prefHeight="731.0" prefWidth="970.0" translateX="50.0" translateY="-40.0">
                      <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="89.0" prefWidth="938.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="73.0" prefWidth="174.0" text="Profile Details">
+                              <Label alignment="TOP_LEFT" prefHeight="78.0" prefWidth="298.0" style="-fx-text-fill: #226a9e;" text="  Profile Details">
                                  <font>
-                                    <Font size="28.0" />
+                                    <Font size="32.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="938.0">
+                        <HBox prefHeight="99.0" prefWidth="970.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="96.0" text="Name:">
+                              <Label prefHeight="17.0" prefWidth="41.0" />
+                              <Label prefHeight="30.0" prefWidth="64.0" text="Name:">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="namelabel" prefHeight="31.0" prefWidth="99.0">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label prefHeight="17.0" prefWidth="108.0" text="User ID">
-                                 <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="idlabel" prefHeight="17.0" prefWidth="106.0">
+                              <Label fx:id="namelabel" prefHeight="31.0" prefWidth="392.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -201,64 +192,77 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="30.0" prefWidth="120.0" text="Password: ">
+                              <Label prefHeight="17.0" prefWidth="72.0" />
+                              <Label prefHeight="30.0" prefWidth="124.0" text="Password: ">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="passwordlabel" prefHeight="17.0" prefWidth="243.0">
+                              <Label fx:id="passwordlabel" prefHeight="30.0" prefWidth="279.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label prefHeight="30.0" prefWidth="177.0" text="Registration Date: ">
+                              <Label prefHeight="30.0" prefWidth="198.0" text="Registration Date: ">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="datelabel" prefHeight="17.0" prefWidth="289.0">
+                              <Label fx:id="datelabel" prefHeight="30.0" prefWidth="332.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="122.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateY="50.0">
+                               <Button fx:id="btnChangePhoto" mnemonicParsing="false" onAction="#handleChangePhoto" prefHeight="32.0" prefWidth="142.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Change Photo" translateX="60.0" translateY="17.0">
+                                   <font>
+                                       <Font size="14.0" />
+                                   </font>
+                               </Button>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="94.0" prefWidth="970.0">
+                           <children>
+                              <Label prefHeight="17.0" prefWidth="44.0" />
+                              <Label prefHeight="30.0" prefWidth="56.0" text="Role:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font size="20.0" />
                                  </font>
-                              </Button>
+                              </Label>
+                              <Label fx:id="rolelabel" prefHeight="30.0" prefWidth="288.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label prefHeight="30.0" prefWidth="84.0" text="User ID:">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="idlabel" prefHeight="30.0" prefWidth="201.0">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="85.0" text="Role:">
+                              <Label prefHeight="73.0" prefWidth="341.0" style="-fx-text-fill: #226a9e;" text="  Contact Information">
                                  <font>
-                                    <Font size="20.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="rolelabel" prefHeight="30.0" prefWidth="177.0">
-                                 <font>
-                                    <Font size="20.0" />
+                                    <Font size="32.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="89.0" prefWidth="938.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="73.0" prefWidth="251.0" text="Contact Information">
-                                 <font>
-                                    <Font size="28.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="95.0" text="E-mail: ">
+                              <Label prefHeight="17.0" prefWidth="42.0" />
+                              <Label prefHeight="30.0" prefWidth="107.0" text="E-mail: ">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="emaillabel" prefHeight="30.0" prefWidth="58.0">
+                              <Label fx:id="emaillabel" prefHeight="30.0" prefWidth="232.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -267,21 +271,22 @@
                         </HBox>
                         <HBox prefHeight="42.0" prefWidth="938.0">
                            <children>
-                              <Label prefHeight="17.0" prefWidth="117.0" text="Phone">
+                              <Label prefHeight="17.0" prefWidth="43.0" />
+                              <Label prefHeight="30.0" prefWidth="107.0" text="Phone:">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="phonelabel">
+                              <Label fx:id="phonelabel" prefHeight="30.0" prefWidth="192.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </Label>
                            </children>
                         </HBox>
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox alignment="CENTER" prefHeight="141.0" prefWidth="938.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Edit Profile">
+                              <Button mnemonicParsing="false" onAction="#handleModify" prefHeight="32.0" prefWidth="182.0" style="-fx-border-color: #080a12; -fx-border-radius: 20; -fx-background-color: transparent; -fx-text-fill: #0c0e17;" stylesheets="@../css/stylesdashboard.css" text="Edit Profile" translateX="50.0">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -301,7 +306,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <Label prefHeight="116.0" prefWidth="571.0" style="-fx-text-fill: #0c0e17;" text="   ProfileSettings">
+                  <Label prefHeight="117.0" prefWidth="571.0" style="-fx-text-fill: #151928;" text="   ProfileSettings" textFill="#226a9e">
                      <font>
                         <Font size="48.0" />
                      </font>

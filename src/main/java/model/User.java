@@ -95,7 +95,7 @@ public class User {
     }
 
     public void setProfilePicture(String profilePicture) {
-        this.profilePicture = "/profilepictures/"+profilePicture;
+        this.profilePicture =profilePicture;
     }
 
     public List<Booking> getBookings() {
