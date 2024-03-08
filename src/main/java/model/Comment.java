@@ -19,7 +19,6 @@ public class Comment {
     public Comment() {
     }
 
-    // Asumiendo que las clases Post y User ya están definidas en el paquete model
     public Comment(Long commentId, Post post, User author, String content, LocalDateTime dateTime) {
         this.commentId = commentId;
         this.post = post;
@@ -28,7 +27,6 @@ public class Comment {
         this.dateTime = dateTime;
     }
 
-    // Getters y setters actualizados para trabajar con objetos relacionados
     public Long getCommentId() {
         return commentId;
     }
@@ -77,7 +75,6 @@ public class Comment {
         this.comments = comments;
     }
 
-    // Asegúrate de actualizar los métodos equals y hashCode para usar las referencias de objetos
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

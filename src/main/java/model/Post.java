@@ -10,9 +10,9 @@ public class Post {
     private Long postId; // Clave Primaria
     private Forum forum; // Sustituir Long forumId por la referencia al objeto Forum
     private User author; // Sustituir Long authorId por la referencia al objeto User
-    private String title; // Título de la publicación
-    private String content; // Contenido de la publicación
-    private LocalDateTime dateTime; // Fecha y hora de la publicación
+    private final String title; // Título de la publicación
+    private final String content; // Contenido de la publicación
+    private final LocalDateTime dateTime; // Fecha y hora de la publicación
 
     public Post(Long postId, Forum forum, User author, String title, String content, LocalDateTime dateTime) {
         this.postId = postId;
@@ -23,7 +23,6 @@ public class Post {
         this.dateTime = dateTime;
     }
 
-    // Getters y setters actualizados para Forum y User
     public Long getPostId() {
         return postId;
     }
@@ -48,11 +47,20 @@ public class Post {
         this.author = author;
     }
 
-    // ... Resto de getters y setters ...
+    public String getTitle() {
+        return title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 
     @Override
     public boolean equals(Object o) {
-        // Método equals actualizado para comparar objetos Forum y User
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Post post = (Post) o;
@@ -61,13 +69,11 @@ public class Post {
 
     @Override
     public int hashCode() {
-        // Método hashCode actualizado para incluir objetos Forum y User
         return Objects.hash(postId, forum, author, title, content, dateTime);
     }
 
     @Override
     public String toString() {
-        // Método toString actualizado para incluir objetos Forum y User
         return "Post{" +
                 "postId=" + postId +
                 ", forum=" + forum +

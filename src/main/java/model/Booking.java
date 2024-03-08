@@ -5,8 +5,8 @@ import java.util.Objects;
 
 public class Booking {
     private Long bookingId;
-    private Accommodation accommodation; // Referencia directa al objeto Accommodation
-    private User user; // Referencia directa al objeto User
+    private Accommodation accommodation;
+    private User user;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private BookingStatus status;
@@ -23,7 +23,6 @@ public class Booking {
         this.status = status;
     }
 
-    // Getters y setters actualizados para usar las referencias de objetos en lugar de Long IDs
     public Long getBookingId() {
         return bookingId;
     }

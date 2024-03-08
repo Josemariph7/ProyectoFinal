@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class BookingController implements CRUD<Booking> {
 
-    private BookingDAO bookingDAO = new BookingDAO();
+    private final BookingDAO bookingDAO = new BookingDAO();
 
     @Override
     public List<Booking> getAll() {

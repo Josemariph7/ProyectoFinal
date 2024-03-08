@@ -8,17 +8,17 @@ import java.util.Objects;
  * Clase que representa un foro en el sistema.
  */
 public class Forum {
-    private Long forumId; // Clave Primaria
-    private String name; // Nombre del foro
+    private final Long forumId; // Clave Primaria
+    private final String name; // Nombre del foro
     private List<Post> posts; // Publicaciones dentro del foro
 
     public Forum(Long forumId, String name) {
         this.forumId = forumId;
         this.name = name;
-        this.posts = new ArrayList<>(); // Inicialización de la lista de publicaciones
+        this.posts = new ArrayList<>();
     }
 
-    // Getters y setters adicionales
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -27,7 +27,6 @@ public class Forum {
         this.posts = posts;
     }
 
-    // Métodos para agregar y quitar publicaciones
     public void addPost(Post post) {
         this.posts.add(post);
     }
@@ -36,7 +35,14 @@ public class Forum {
         this.posts.remove(post);
     }
 
-    // toString, equals, y hashCode actualizados
+    public Long getForumId() {
+        return forumId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Forum{" +

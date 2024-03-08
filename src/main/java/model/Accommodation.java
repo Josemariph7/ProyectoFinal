@@ -85,8 +85,6 @@ public class Accommodation {
         this.reviews = reviews;
     }
 
-    // Métodos equals, hashCode y toString adaptados para el nuevo campo owner
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

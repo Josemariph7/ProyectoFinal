@@ -22,12 +22,10 @@ import java.util.ResourceBundle;
 public class StudentDashboardController implements Initializable {
 
     @FXML
-    private VBox pnItems = null;
+    private final VBox pnItems = null;
 
     @FXML
     private Button btnSignout;
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

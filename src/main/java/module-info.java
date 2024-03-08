@@ -13,13 +13,20 @@ module com.example.proyectofinal {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires org.json;
-    requires junit;
     requires org.junit.jupiter.api;
+    requires junit;
+    requires javafx.swing;
 
     opens controller to javafx.fxml;
     exports controller;
     opens view to javafx.graphics;
     exports view;
     opens model to javafx.base;
+    opens test to org.junit.jupiter.api;
+    exports test;
+
+
+
+
 
 }

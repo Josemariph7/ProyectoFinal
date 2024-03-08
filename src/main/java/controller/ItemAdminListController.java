@@ -18,9 +18,21 @@ import java.util.Optional;
 public class ItemAdminListController {
 
     @FXML
-    private Label lblUserId, lblName, lblEmail, lblPhone, lblRole, lblRegDate;
+    public Label lblUserId;
     @FXML
-    private Button btnDelete, btnModify;
+    public Label lblName;
+    @FXML
+    public Label lblEmail;
+    @FXML
+    public Label lblPhone;
+    @FXML
+    public Label lblRole;
+    @FXML
+    public Label lblRegDate;
+    @FXML
+    public Button btnDelete;
+    @FXML
+    public Button btnModify;
 
     private User user;
 
@@ -30,6 +42,8 @@ public class ItemAdminListController {
 
     private VBox pnItems;
     AdminDashboardController dashboard;
+
+
 
 
     public void initialize() {
@@ -48,22 +62,16 @@ public class ItemAdminListController {
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
         lblRole.setText(user.getRole().toString());
-
-        // Formatear la fecha de registro antes de establecerla en el Label
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);
     }
 
     @FXML
-    private void handleDelete() {
-        // Borra el usuario de la base de datos
+    public void handleDelete() {
+
         userController.delete(user.getUserId());
-
-        // Obtiene el índice del nodo que representa al usuario en el VBox
         int index = pnItems.getChildren().indexOf(node);
-
-        // Elimina el nodo del VBox
         if (index != -1) {
             pnItems.getChildren().remove(index);
         } else {
@@ -84,14 +92,9 @@ public class ItemAdminListController {
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(new Scene(root));
-
-            // Configurar el controlador actual como userData
             stage.setUserData(this);
-
-            // Configurar el evento para el botón Cancelar
             ModifyController modifyController = loader.getController();
             modifyController.btnCancel.setOnAction(event -> {
-                // Cerrar la ventana de modificación cuando se presiona Cancelar
                 stage.close();
             });
 
@@ -110,8 +113,6 @@ public class ItemAdminListController {
         lblEmail.setText(user.getEmail());
         lblPhone.setText(user.getPhone());
         lblRole.setText(user.getRole().toString());
-
-        // Formatear la fecha de registro antes de establecerla en el Label
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = user.getRegistrationDate().format(formatter);
         lblRegDate.setText(formattedDate);

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class PostController implements CRUD<Post> {
 
-    private PostDAO postDAO = new PostDAO();
+    private final PostDAO postDAO = new PostDAO();
 
     @Override
     public List<Post> getAll() {

@@ -116,13 +116,13 @@ public class AdminDashboardController implements Initializable {
     private double xOffset = 0;
     private double yOffset = 0;
 
-    private int totalUsers = 0;
-    private int totalStudents = 0;
-    private  int totalOwners = 0;
-    private int registeredLastWeek = 0;
+    private final int totalUsers = 0;
+    private final int totalStudents = 0;
+    private final int totalOwners = 0;
+    private final int registeredLastWeek = 0;
     LocalDate oneWeekAgo = LocalDate.now().minusWeeks(1);
 
-    private UserController userController = new UserController();
+    private final UserController userController = new UserController();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -136,7 +136,6 @@ public class AdminDashboardController implements Initializable {
         });
         dragArea.toFront();
 
-        // Obtener todos los usuarios desde la base de datos
         List<User> users = userController.getAll();
 
         for (User user : users) {
@@ -144,9 +143,9 @@ public class AdminDashboardController implements Initializable {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml"));
                 Node node = loader.load();
-                // Configurar el controlador del nodo
+
                 ItemAdminListController controller = loader.getController();
-                controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
+                controller.initData(user, userController, node, pnItems, this);
 
                 pnItems.getChildren().add(node);
             } catch (IOException e) {
@@ -156,7 +155,7 @@ public class AdminDashboardController implements Initializable {
     }
 
     public void updateStatistics() {
-        // Obtener todos los usuarios desde la base de datos
+
         List<User> usersAux = userController.getAll();
          int totalUsers = 0;
          int totalStudents = 0;
@@ -164,18 +163,17 @@ public class AdminDashboardController implements Initializable {
          int registeredLastWeek = 0;
 
         for (User user : usersAux) {
-            // Incrementar el contador total de usuarios
+
             totalUsers++;
 
-            // Determinar si el usuario es estudiante
             if (user.getRole() == User.UserRole.STUDENT) {
                 totalStudents++;
             }
-            // Determinar si el usuario es propietario
+
             if (user.getRole() == User.UserRole.OWNER) {
                 totalOwners++;
             }
-            // Verificar si el usuario se registró la última semana
+
             LocalDate registrationDate = user.getRegistrationDate().toLocalDate();
 
             if (registrationDate.isAfter(oneWeekAgo) || registrationDate.equals(oneWeekAgo)) {
@@ -393,20 +391,16 @@ public class AdminDashboardController implements Initializable {
 
                 File destFile = new File(directory, filename);
 
-                // Copiar el archivo seleccionado al directorio del proyecto
                 Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
-                // Cargar la imagen en la interfaz
                 Image image = new Image(destFile.toURI().toString());
                 circle.setFill(new ImagePattern(image));
                 circleProfile.setFill(new ImagePattern(image));
 
-                // Actualizar el currentUser con la nueva imagen
                 System.out.println(filename);
                 currentUser.setProfilePicture(filename);
                 userController.update(currentUser);
 
-                // Aquí deberías guardar el cambio en currentUser en tu base de datos o archivo de configuración
 
             } catch (IOException e) {
                 e.printStackTrace();

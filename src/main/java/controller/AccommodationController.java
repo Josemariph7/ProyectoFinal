@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class AccommodationController implements CRUD<Accommodation> {
 
-    private AccommodationDAO accommodationDAO = new AccommodationDAO();
+    private final AccommodationDAO accommodationDAO = new AccommodationDAO();
 
     @Override
     public List<Accommodation> getAll() {

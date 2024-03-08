@@ -22,27 +22,25 @@ public class SignUpController implements Initializable {
     private static final String PHONE_REGEX = "^\\+34[0-9]{9}$";
     private static final String NAME_REGEX = "^[\\p{L}]+(?: [\\p{L}]+)+$";
 
-
-    // Patrones compilados para validar los campos
-    private Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
-    private Pattern passwordPattern = Pattern.compile(PASSWORD_REGEX);
-    private Pattern phonePattern = Pattern.compile(PHONE_REGEX);
-    private Pattern namePattern = Pattern.compile(NAME_REGEX);
+    private final Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
+    private final Pattern passwordPattern = Pattern.compile(PASSWORD_REGEX);
+    private final Pattern phonePattern = Pattern.compile(PHONE_REGEX);
+    private final Pattern namePattern = Pattern.compile(NAME_REGEX);
 
     @FXML
-    private TextField fullNameField;
+    public TextField fullNameField;
     @FXML
-    private TextField signupEmailField;
+    public TextField signupEmailField;
     @FXML
-    private TextField passwordField;
+    public TextField passwordField;
     @FXML
-    private TextField passwordField2;
+    public TextField passwordField2;
     @FXML
-    private ChoiceBox<UserRole> roleChoiceBox;
+    public ChoiceBox<UserRole> roleChoiceBox;
     @FXML
     private Button signUpButton;
 
-    private UserController userController = new UserController();
+    public UserController userController = new UserController();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,7 +49,7 @@ public class SignUpController implements Initializable {
     }
 
     @FXML
-    private void signUp() {
+    public void signUp() {
         String email = signupEmailField.getText();
         String fullName = fullNameField.getText();
         String password = passwordField.getText();

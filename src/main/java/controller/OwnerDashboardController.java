@@ -35,9 +35,7 @@ public class OwnerDashboardController implements Initializable {
     @FXML
     public void signOut(ActionEvent actionEvent) {
         if (actionEvent.getSource() == btnSignout) {
-            // Obtener el Stage actual desde cualquier nodo de la escena
             Stage stage = (Stage) btnSignout.getScene().getWindow();
-
             try {
                 URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
                 if (fxmlUrl == null) {

@@ -19,7 +19,6 @@ public class User {
     private List<Review> reviews;
     private List<Accommodation> accommodations;
 
-    // Constructor completo
     public User(String name, String email, String password, String phone, UserRole role) {
         this.name = name;
         this.email = email;
@@ -30,7 +29,6 @@ public class User {
         this.profilePicture=null;
     }
 
-    // Constructor vacío
     public User() {
     }
 

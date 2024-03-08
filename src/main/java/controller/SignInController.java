@@ -24,7 +24,7 @@ import java.util.List;
 
 public class SignInController {
 
-    private Stage splashStage;
+    public Stage splashStage;
 
     @FXML
     private AnchorPane root;
@@ -32,13 +32,13 @@ public class SignInController {
     @FXML
     private VBox vbox;
 
-    private UserController userController = new UserController();
+    public UserController userController = new UserController();
 
     @FXML
-    private TextField emailField;
+    public TextField emailField;
 
     @FXML
-    private PasswordField passwordField;
+    public PasswordField passwordField;
 
     @FXML
     private void initialize() {
@@ -47,26 +47,21 @@ public class SignInController {
     }
 
     @FXML
-    void login() {
+    public void login() {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        // Primero, verifica si los campos están vacíos
         if (email.isEmpty() || password.isEmpty()) {
             showError("Por favor, introduce el correo electrónico y la contraseña.");
             return;
         }
-
-        // Encuentra el usuario, si existe, y valida las credenciales
         List<User> userList = userController.getAll();
         for (User user : userList) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
-                // Si las credenciales son válidas, muestra la splash screen y luego carga el dashboard
                 showSplashScreen(() -> Platform.runLater(() -> loadDashboard(user.getRole(), user)));
                 return;
             }
         }
-        // Si no se encuentra el usuario o la contraseña es incorrecta, muestra un error
         showError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
     }
 
@@ -84,7 +79,6 @@ public class SignInController {
                 fxmlPath = "/fxml/DashboardOwner.fxml";
                 break;
             default:
-                // Mostrar un mensaje de error si el rol no es reconocido
                 showError("Rol de usuario no reconocido");
                 return;
         }
@@ -95,17 +89,12 @@ public class SignInController {
             AdminDashboardController adminController = loader.getController();
             adminController.initData(user);
 
-            // Configurar la escena
             Scene scene = new Scene(dashboard);
 
-            // Obtener el Stage actual desde cualquier nodo de la escena
             Stage stage = (Stage) emailField.getScene().getWindow();
 
-            // Establecer la escena y mostrar el Stage
             stage.setScene(scene);
             stage.show();
-
-            // Cerrar la pantalla de presentación
             closeSplashScreen();
         } catch (IOException ex) {
             showError("No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.");
@@ -126,7 +115,7 @@ public class SignInController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SplashScreen.fxml"));
             Parent root = loader.load();
             splashStage = new Stage();
-            splashStage.initStyle(StageStyle.TRANSPARENT); // Transparente si así lo prefieres
+            splashStage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = new Scene(root);
             splashStage.setScene(scene);
             splashStage.show();

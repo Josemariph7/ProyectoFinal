@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ReviewController implements CRUD<Review> {
 
-    private ReviewDAO reviewDAO = new ReviewDAO();
+    private final ReviewDAO reviewDAO = new ReviewDAO();
 
     @Override
     public List<Review> getAll() {

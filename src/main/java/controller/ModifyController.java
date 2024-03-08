@@ -31,7 +31,7 @@ public class ModifyController  {
 
     private User user;
 
-    private UserController userController;
+    public UserController userController;
 
     public User getUser() {
         return user;
@@ -44,19 +44,12 @@ public class ModifyController  {
         user.setPassword(txtPassword.getText());
         user.setPhone(txtPhone.getText());
         userController.update(user);
-
-        // Llamar al método para actualizar los campos en ItemAdminListController
         updateItemAdminList();
-
-        // Cierra la ventana de modificación cuando se presiona Aceptar
         ((Stage) btnAccept.getScene().getWindow()).close();
     }
 
     private void updateItemAdminList() {
-        // Obtener el controlador del ItemAdminListController
         ItemAdminListController itemAdminListController = (ItemAdminListController) btnAccept.getScene().getWindow().getUserData();
-
-        // Actualizar los datos del usuario en el ItemAdminListController
         itemAdminListController.updateUserData(user);
     }
 

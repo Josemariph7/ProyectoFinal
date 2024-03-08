@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class CommentController implements CRUD<Comment> {
 
-    private CommentDAO commentDAO = new CommentDAO();
+    private final CommentDAO commentDAO = new CommentDAO();
 
     @Override
     public List<Comment> getAll() {

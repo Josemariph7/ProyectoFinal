@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UserController implements CRUD<User> {
 
-    private UserDAO userDAO = new UserDAO();
+    private final UserDAO userDAO = new UserDAO();
 
     @Override
     public List<User> getAll() {

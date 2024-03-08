@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class ForumController implements CRUD<Forum> {
 
-    private ForumDAO forumDAO = new ForumDAO();
+    private final ForumDAO forumDAO = new ForumDAO();
 
     @Override
     public List<Forum> getAll() {

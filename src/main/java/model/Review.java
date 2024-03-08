@@ -23,11 +23,9 @@ public class Review {
         this.dateTime = dateTime;
     }
 
-    // Constructor vacío si es necesario
     public Review() {
     }
 
-    // Getters y setters
     public Long getReviewId() {
         return reviewId;
     }
@@ -76,7 +74,6 @@ public class Review {
         this.dateTime = dateTime;
     }
 
-    // Métodos equals, hashCode y toString actualizados para usar referencias de objeto
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

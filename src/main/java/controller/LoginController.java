@@ -17,10 +17,8 @@ import javafx.util.Duration;
 public class LoginController implements Initializable {
 
     @FXML
-    private VBox vbox;
+    public VBox vbox;
     private Parent fxml;
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -39,7 +37,7 @@ public class LoginController implements Initializable {
         });
     }
     @FXML
-    private void open_signin(ActionEvent event){
+    public void open_signin(ActionEvent event){
         TranslateTransition t = new TranslateTransition(Duration.seconds(0.8), vbox);
         t.setToX(0);
         t.play();
@@ -54,7 +52,7 @@ public class LoginController implements Initializable {
         });
     }
     @FXML
-    private void open_signup(ActionEvent event){
+    public void open_signup(ActionEvent event){
         TranslateTransition t = new TranslateTransition(Duration.seconds(0.8), vbox);
         t.setToX(vbox.getLayoutX() / -1.084);
         t.play();
