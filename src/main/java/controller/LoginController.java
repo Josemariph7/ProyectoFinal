@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import utils.Constants;
 
 /**
  * Controlador para la ventana de inicio de sesión.
@@ -36,7 +37,7 @@ public class LoginController implements Initializable {
         t.setOnFinished((e) ->{
             // Cargar el formulario de inicio de sesión
             try{
-                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignIn.fxml")));
+                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.SIGNIN_FXML)));
                 vbox.getChildren().removeAll();
                 vbox.getChildren().setAll(fxml);
             }catch(IOException ignored){
@@ -58,7 +59,7 @@ public class LoginController implements Initializable {
         t.setOnFinished((e) ->{
             // Cargar el formulario de inicio de sesión
             try{
-                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignIn.fxml")));
+                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.SIGNIN_FXML)));
                 vbox.getChildren().removeAll();
                 vbox.getChildren().setAll(fxml);
             }catch(IOException ignored){
@@ -74,13 +75,13 @@ public class LoginController implements Initializable {
     @FXML
     public void open_signup(ActionEvent event){
         // Transición de animación para mostrar el formulario de registro
-        TranslateTransition t = new TranslateTransition(Duration.seconds(0.8), vbox);
+        TranslateTransition t = new TranslateTransition(Duration.seconds(Constants.TRANSITION_TIME), vbox);
         t.setToX(vbox.getLayoutX() / -1.084); // Mueve el VBox a la izquierda para mostrar el formulario de registro
         t.play();
         t.setOnFinished((e) ->{
             // Cargar el formulario de registro
             try{
-                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/SignUp.fxml")));
+                fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(Constants.SIGNUP_FXML)));
                 vbox.getChildren().removeAll();
                 vbox.getChildren().setAll(fxml);
             }catch(IOException ignored){

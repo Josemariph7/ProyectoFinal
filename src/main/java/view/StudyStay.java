@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utils.Constants;
+
 import java.net.URL;
 
 /**
@@ -18,9 +20,9 @@ public class StudyStay extends Application {
     public void start(Stage stage) {
         try {
             // Cargar el archivo FXML para la pantalla de inicio de sesión
-            URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
+            URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
             if (fxmlUrl == null) {
-                throw new IllegalArgumentException("No se pudo encontrar el archivo FXML");
+                throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
             }
             Parent root = FXMLLoader.load(fxmlUrl);
 

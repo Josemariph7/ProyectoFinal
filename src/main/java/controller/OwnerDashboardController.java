@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
 import model.User;
+import utils.Constants;
 
 import java.io.IOException;
 import java.net.URL;
@@ -46,9 +47,9 @@ public class OwnerDashboardController implements Initializable {
             Stage stage = (Stage) btnSignout.getScene().getWindow();
             try {
                 // Cargar la vista de inicio de sesión al cerrar sesión
-                URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
+                URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
                 if (fxmlUrl == null) {
-                    throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+                    throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
                 }
                 Parent root = FXMLLoader.load(fxmlUrl);
                 Scene scene = new Scene(root);
@@ -57,7 +58,7 @@ public class OwnerDashboardController implements Initializable {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showError("Error al cargar la vista de inicio de sesión.");
+                showError(Constants.LOAD_VIEW_ERROR);
             }
         }
     }

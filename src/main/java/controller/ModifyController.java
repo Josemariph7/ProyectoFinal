@@ -46,7 +46,6 @@ public class ModifyController {
 
         // Actualiza el usuario en la base de datos
         userController.update(user);
-
         // Actualiza la lista de usuarios en la interfaz de administrador
         updateItemAdminList();
 
@@ -71,7 +70,6 @@ public class ModifyController {
     public void initData(User user, UserController userController) {
         this.userController = userController;
         this.user = user;
-
         // Configura los valores iniciales de los campos con los datos del usuario
         if (user != null) {
             roleChoiceBox.getItems().addAll(User.UserRole.values());

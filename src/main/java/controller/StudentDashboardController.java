@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.User;
+import utils.Constants;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,9 +39,9 @@ public class StudentDashboardController implements Initializable {
 
             try {
                 // Carga la vista de inicio de sesión
-                URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
+                URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
                 if (fxmlUrl == null) {
-                    throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+                    throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
                 }
                 Parent root = FXMLLoader.load(fxmlUrl);
                 Scene scene = new Scene(root);
@@ -49,7 +50,7 @@ public class StudentDashboardController implements Initializable {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showError("Error al cargar la vista de inicio de sesión.");
+                showError(Constants.LOAD_VIEW_ERROR);
             }
         }
     }

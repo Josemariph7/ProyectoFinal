@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.User;
+import utils.Constants;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
@@ -99,7 +100,7 @@ public class ItemAdminListController {
     @FXML
     private void handleModify() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Modify.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.MODIFY_FXML));
             Parent root = loader.load();
             System.out.println("Usuario que se intenta modificar: " + user);
             ModifyController modify = loader.getController();
@@ -109,6 +110,7 @@ public class ItemAdminListController {
             stage.setScene(new Scene(root));
             stage.setUserData(this);
             ModifyController modifyController = loader.getController();
+            dashboard.updateStatistics();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });

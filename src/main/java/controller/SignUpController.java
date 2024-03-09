@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import utils.Constants;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -18,16 +19,10 @@ import java.util.regex.Matcher;
 
 public class SignUpController implements Initializable {
 
-    // Expresiones regulares para validar campos
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,}$";
-    private static final String PHONE_REGEX = "^\\+34[0-9]{9}$";
-    private static final String NAME_REGEX = "^[\\p{L}]+(?: [\\p{L}]+)+$";
-
-    private final Pattern emailPattern = Pattern.compile(EMAIL_REGEX);
-    private final Pattern passwordPattern = Pattern.compile(PASSWORD_REGEX);
-    private final Pattern phonePattern = Pattern.compile(PHONE_REGEX);
-    private final Pattern namePattern = Pattern.compile(NAME_REGEX);
+    private final Pattern emailPattern = Pattern.compile(Constants.EMAIL_REGEX);
+    private final Pattern passwordPattern = Pattern.compile(Constants.PASSWORD_REGEX);
+    private final Pattern phonePattern = Pattern.compile(Constants.PHONE_REGEX);
+    private final Pattern namePattern = Pattern.compile(Constants.NAME_REGEX);
 
     @FXML
     public TextField fullNameField;
@@ -86,7 +81,7 @@ public class SignUpController implements Initializable {
         try {
             // Verifica si el usuario ya existe
             if (userExists(email)) {
-                showError("El usuario ya existe.");
+                showError(Constants.USER_EXISTS_ERROR);
                 return;
             }
             // Crea un nuevo objeto de usuario y lo guarda en la base de datos
@@ -99,7 +94,7 @@ public class SignUpController implements Initializable {
             passwordField.setText("");
             passwordField2.setText("");
         } catch (SQLException e) {
-            showError("Error al registrar el usuario: " + e.getMessage());
+            showError(Constants.DATABASE_ERROR + e.getMessage());
         }
     }
 

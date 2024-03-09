@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.User;
+import utils.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,6 +33,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicReference;
+
+
 
 /**
  * Controlador para el panel de administrador.
@@ -97,7 +100,7 @@ public class AdminDashboardController implements Initializable {
         for (User user : users) {
             updateStatistics();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.ITEM_ADMIN_LIST_FXML));
                 Node node = loader.load();
 
                 ItemAdminListController controller = loader.getController();
@@ -184,9 +187,9 @@ public class AdminDashboardController implements Initializable {
             Stage stage = (Stage) btnSignout.getScene().getWindow();
 
             try {
-                URL fxmlUrl = getClass().getResource("/fxml/LogIn.fxml");
+                URL fxmlUrl = getClass().getResource(Constants.LOGIN_FXML);
                 if (fxmlUrl == null) {
-                    throw new IllegalArgumentException("No se pudo encontrar el archivo fxml");
+                    throw new IllegalArgumentException(Constants.FILE_NOT_FOUND_ERROR);
                 }
                 Parent root = FXMLLoader.load(fxmlUrl);
                 Scene scene = new Scene(root);
@@ -195,7 +198,7 @@ public class AdminDashboardController implements Initializable {
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
-                showError("Error al cargar la vista de inicio de sesión.");
+                showError(Constants.LOAD_VIEW_ERROR);
             }
         }
     }
@@ -248,7 +251,7 @@ public class AdminDashboardController implements Initializable {
      * Carga la imagen predeterminada del usuario.
      */
     private void cargarImagenPredeterminada() {
-        String defaultImageUrl = "/profilepictures/default.png";
+        String defaultImageUrl = Constants.DEFAULT_PROFILE_PICTURE;
         URL defaultResource = getClass().getResource(defaultImageUrl);
         if (defaultResource != null) {
             Image defaultProfilePicture = new Image(defaultResource.toExternalForm());
@@ -369,7 +372,7 @@ public class AdminDashboardController implements Initializable {
                 userController.update(currentUser);
             } catch (IOException e) {
                 e.printStackTrace();
-                showError("Error saving the image.");
+                showError(Constants.IMAGE_SAVE_ERROR);
             }
         }
     }

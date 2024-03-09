@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import model.User;
+import utils.Constants;
 
 import java.io.IOException;
 import java.util.List;
@@ -71,16 +72,16 @@ public class SignInController {
         String fxmlPath;
         switch (role) {
             case ADMINISTRATOR:
-                fxmlPath = "/fxml/DashboardAdmin.fxml";
+                fxmlPath = Constants.DASHBOARD_ADMIN_FXML;
                 break;
             case STUDENT:
-                fxmlPath = "/fxml/DashboardStudent.fxml";
+                fxmlPath = Constants.DASHBOARD_STUDENT_FXML;
                 break;
             case OWNER:
-                fxmlPath = "/fxml/DashboardOwner.fxml";
+                fxmlPath = Constants.DASHBOARD_OWNER_FXML;
                 break;
             default:
-                showError("Rol de usuario no reconocido");
+                showError(Constants.INVALID_USER_ROLE);
                 return;
         }
 
@@ -96,7 +97,7 @@ public class SignInController {
             switch (role) {
                 case ADMINISTRATOR:
                     if (!(controller instanceof AdminDashboardController)) {
-                        showError("Error al cargar el panel de control. Controlador incorrecto.");
+                        showError(Constants.DASHBOARD_LOAD_ERROR);
                         return;
                     }
                     ((AdminDashboardController) controller).initData(user);
@@ -126,12 +127,10 @@ public class SignInController {
             // Cerrar la pantalla de carga (splash screen)
            closeSplashScreen();
         } catch (IOException ex) {
-            showError("No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.");
+            showError(Constants.DASHBOARD_LOAD_ERROR);
             ex.printStackTrace();
         }
     }
-
-
 
     /**
      * Método para mostrar un mensaje de error.
@@ -151,7 +150,7 @@ public class SignInController {
      */
     private void showSplashScreen(Runnable onSplashScreenFinished) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SplashScreen.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.SPLASH_SCREEN_FXML));
             Parent root = loader.load();
 
             splashStage = new Stage();
