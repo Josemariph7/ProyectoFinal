@@ -25,8 +25,4 @@ module com.example.proyectofinal {
     opens test to org.junit.jupiter.api;
     exports test;
 
-
-
-
-
 }

@@ -42,6 +42,7 @@ public class ModifyController {
         user.setName(txtName.getText());
         user.setPassword(txtPassword.getText());
         user.setPhone(txtPhone.getText());
+        System.out.println(user);
 
         // Actualiza el usuario en la base de datos
         userController.update(user);
@@ -94,6 +95,6 @@ public class ModifyController {
     }
 
     public User getUser() {
-        return null;
+        return user;
     }
 }

@@ -47,12 +47,10 @@ public class SignInController {
     public void login() {
         String email = emailField.getText();
         String password = passwordField.getText();
-
         if (email.isEmpty() || password.isEmpty()) {
             showError("Por favor, introduce el correo electrónico y la contraseña.");
             return;
         }
-
         List<User> userList = userController.getAll();
         for (User user : userList) {
             if (user.getEmail().equals(email) && user.getPassword().equals(password)) {
@@ -61,7 +59,6 @@ public class SignInController {
                 return;
             }
         }
-
         showError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
     }
 
@@ -91,9 +88,34 @@ public class SignInController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent dashboard = loader.load();
 
-            // Inicializa el controlador del panel de control correspondiente y pasa los datos del usuario
-            AdminDashboardController adminController = loader.getController();
-            adminController.initData(user);
+            // Obtener el controlador cargado
+            Object controller = loader.getController();
+            System.out.println(controller);
+
+            // Verificar que el controlador cargado sea del tipo correcto
+            switch (role) {
+                case ADMINISTRATOR:
+                    if (!(controller instanceof AdminDashboardController)) {
+                        showError("Error al cargar el panel de control. Controlador incorrecto.");
+                        return;
+                    }
+                    ((AdminDashboardController) controller).initData(user);
+                    break;
+                case STUDENT:
+                    if (!(controller instanceof StudentDashboardController)) {
+                        showError("Inicio de sesion Estudiante");
+                        return;
+                    }
+                    ((StudentDashboardController) controller).initData(user);
+                    break;
+                case OWNER:
+                    if (!(controller instanceof OwnerDashboardController)) {
+                        showError("Inicio de sesion Propietario");
+                        return;
+                    }
+                    ((OwnerDashboardController) controller).initData(user);
+                    break;
+            }
 
             Scene scene = new Scene(dashboard);
             Stage stage = (Stage) emailField.getScene().getWindow();
@@ -101,13 +123,15 @@ public class SignInController {
             stage.setScene(scene);
             stage.show();
 
-            // Cierra la pantalla de carga (splash screen)
-            closeSplashScreen();
+            // Cerrar la pantalla de carga (splash screen)
+           closeSplashScreen();
         } catch (IOException ex) {
             showError("No se pudo cargar el panel de control. Inténtalo de nuevo más tarde.");
             ex.printStackTrace();
         }
     }
+
+
 
     /**
      * Método para mostrar un mensaje de error.

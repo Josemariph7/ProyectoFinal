@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.OwnerDashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1440.0" style="-fx-background-color: #02030A;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.StudentDashboardController">
     <children>
         <VBox fx:id="pnItems" alignment="TOP_CENTER" prefHeight="576.0" prefWidth="256.0" style="-fx-background-color: #151928;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -20,7 +20,7 @@
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../multimedia/icons8_Sign_Out_32px.png" />
+                                <Image url="@../multimedia/icons8-cierre-de-sesión-redondeado-hacia-abajo-64.png" />
                             </image>
                         </ImageView>
                     </graphic>
@@ -42,11 +42,6 @@
                                 <Font size="48.0" />
                             </font>
                         </Label>
-                  <ImageView fitHeight="42.0" fitWidth="42.0" layoutX="1126.0" layoutY="14.0" onMouseClicked="#closeApp">
-                     <image>
-                        <Image url="@../multimedia/close.png" />
-                     </image>
-                  </ImageView>
                     </children>
                 </Pane>
             </children>

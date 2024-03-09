@@ -31,6 +31,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Controlador para el panel de administrador.
@@ -174,7 +175,6 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     /**
      * Realiza el cierre de sesión.
      * @param actionEvent El evento del mouse.
@@ -200,7 +200,6 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     /**
      * Inicializa los datos del usuario.
      * @param user El usuario actual.
@@ -220,8 +219,6 @@ public class AdminDashboardController implements Initializable {
         if (currentUser != null) {
             this.username.setText(currentUser.getName());
             String imageUrl = "/profilepictures/"+currentUser.getProfilePicture();
-            System.out.println(this.currentUser.getProfilePicture());
-            System.out.println(imageUrl);
             if (imageUrl != null && !imageUrl.isEmpty()) {
                 try {
                     URL resource = getClass().getResource(imageUrl);
@@ -247,7 +244,6 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     /**
      * Carga la imagen predeterminada del usuario.
      */
@@ -265,17 +261,16 @@ public class AdminDashboardController implements Initializable {
         }
     }
 
-
     /**
      * Abre la ventana de modificación del usuario.
      */
     @FXML
     private void handleModify() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Modify.fxml"));
-            Parent root = loader.load();
+            AtomicReference<FXMLLoader> loader = new AtomicReference<>(new FXMLLoader(getClass().getResource("/fxml/Modify.fxml")));
+            Parent root = loader.get().load();
             System.out.println("Usuario que se intenta modificar: "+currentUser);
-            ModifyController modify = loader.getController();
+            ModifyController modify = loader.get().getController();
             modify.initData(currentUser, userController);
             Stage stage = new Stage();
             stage.initStyle(StageStyle.UNDECORATED);
@@ -285,18 +280,20 @@ public class AdminDashboardController implements Initializable {
             stage.setUserData(this);
 
             // Configurar el evento para el botón Cancelar
-            ModifyController modifyController = loader.getController();
+            ModifyController modifyController = loader.get().getController();
             modifyController.btnCancel.setOnAction(event -> {
                 stage.close();
             });
 
             modifyController.btnAccept.setOnAction(event -> {
 
+                System.out.println(currentUser);
                 currentUser.setName(modifyController.txtName.getText());
                 currentUser.setPhone(modifyController.txtPhone.getText());
                 currentUser.setRole(modifyController.getUser().getRole());
                 currentUser.setPassword(modifyController.txtPassword.getText());
                 currentUser.setEmail(modifyController.txtEmail.getText());
+                System.out.println(currentUser);
                 username.setText(currentUser.getName());
                 namelabel.setText(currentUser.getName());
                 idlabel.setText(String.valueOf(currentUser.getUserId()));
@@ -309,37 +306,35 @@ public class AdminDashboardController implements Initializable {
                 phonelabel.setText(currentUser.getPhone());
                 userController.update(currentUser);
                 System.out.println("SE HA MODIFICADO: "+currentUser);
+                List<User> users = userController.getAll();
+                while(!pnItems.getChildren().isEmpty()) {
+                    pnItems.getChildren().remove(0);
+                }
+                System.out.println(currentUser);
+                initData(currentUser);
+                System.out.println(currentUser);
+
+                for (User user : users) {
+                    updateStatistics();
+                    try {
+                        loader.set(new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml")));
+                        Node node = loader.get().load();
+                        // Configurar el controlador del nodo
+                        ItemAdminListController controller = loader.get().getController();
+                        controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
+
+                        pnItems.getChildren().add(node);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 stage.close();
             });
-
-            List<User> users = userController.getAll();
-            while(!pnItems.getChildren().isEmpty()) {
-                pnItems.getChildren().remove(0);
-            }
-            System.out.println(currentUser);
-            initData(currentUser);
-            System.out.println(currentUser);
-
-            for (User user : users) {
-                updateStatistics();
-                try {
-                     loader = new FXMLLoader(getClass().getResource("/fxml/ItemAdminList.fxml"));
-                    Node node = loader.load();
-                    // Configurar el controlador del nodo
-                    ItemAdminListController controller = loader.getController();
-                    controller.initData(user, userController, node, pnItems, this); // Pasa el usuario al controlador del nodo
-
-                    pnItems.getChildren().add(node);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
             stage.show();
             initData(currentUser);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Modificar usuario: " + currentUser);
     }
 
     /**
@@ -353,7 +348,6 @@ public class AdminDashboardController implements Initializable {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
         );
-
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         File file = fileChooser.showOpenDialog(stage);
 
@@ -366,20 +360,13 @@ public class AdminDashboardController implements Initializable {
                 if (!directory.exists()) {
                     directory.mkdirs();
                 }
-
                 File destFile = new File(directory, filename);
-
                 Files.copy(file.toPath(), destFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
                 Image image = new Image(destFile.toURI().toString());
                 circle.setFill(new ImagePattern(image));
                 circleProfile.setFill(new ImagePattern(image));
-
-                System.out.println(filename);
                 currentUser.setProfilePicture(filename);
                 userController.update(currentUser);
-
-
             } catch (IOException e) {
                 e.printStackTrace();
                 showError("Error saving the image.");

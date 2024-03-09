@@ -8,13 +8,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -30,7 +34,6 @@ public class OwnerDashboardController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // Método de inicialización (no se requiere por ahora)
     }
 
     /**
@@ -57,6 +60,9 @@ public class OwnerDashboardController implements Initializable {
                 showError("Error al cargar la vista de inicio de sesión.");
             }
         }
+    }
+
+    public void initData(User user) {
     }
 
     /**

@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.User;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,5 +72,8 @@ public class StudentDashboardController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public void initData(User user) {
     }
 }
